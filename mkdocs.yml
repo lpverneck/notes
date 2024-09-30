@@ -1,5 +1,5 @@
 site_name: My Notes
-# site_url:
+site_url: https://lpverneck.github.io/notes/
 theme:
   name: material
   font:
