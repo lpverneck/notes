@@ -11,7 +11,7 @@ theme:
     code: Roboto Mono
   icon:
     logo: material/book
-  # favicon: path/to/file.png
+  favicon: assets/icons.png
   features:
     - content.code.copy
     - navigation.footer
