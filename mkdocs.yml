@@ -1,5 +1,9 @@
-site_name: My Notes
+site_name: Knowledge Wiki
 site_url: https://lpverneck.github.io/notes/
+repo_url: https://github.com/lpverneck/notes
+site_description: Personal wiki with my reference material and notes.
+site_author: Lucas Verneck
+
 theme:
   name: material
   font:
@@ -10,6 +14,8 @@ theme:
   # favicon: path/to/file.png
   features:
     - content.code.copy
+    - navigation.footer
+    - navigation.sections
   palette:
     - scheme: default
       toggle:
@@ -24,23 +30,58 @@ theme:
       primary: indigo
       accent: indigo
 
+extra:
+  social:
+    - icon: simple/github
+      link: https://github.com/lpverneck
+    - icon: simple/linkedin
+      link: https://www.linkedin.com/in/lpverneck/
+
+# copyright: Copyright &copy; 2024 Lucas Verneck
+
 nav:
     - Home: index.md
-    - JavaScript Basics: test.md
+    - Examples:
+      - Jupyter Notebook: examples/example_nb.ipynb
+      - Mkdocs Material: examples/example_mkdocs_material.md
 
-# plugins:
-#   - mkdocs-jupyter
+plugins:
+  - search:
+  - mkdocs-jupyter:
+      execute: False
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      slide_effect: slide
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+      auto_caption: false
+      caption_position: bottom
+      background: white
+      shadow: true
+      manual: false
 
 markdown_extensions:
   - attr_list
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - admonition
+  - pymdownx.details
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
-
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
       pygments_lang_class: true
-  - pymdownx.inlinehilite
-  - pymdownx.snippets
-  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
