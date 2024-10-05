@@ -3,7 +3,8 @@
 :track_next:
 
 !!! info "Running JS from Script"
-    1. Create a Javascript file **example.js** 2. Add in the final body section on **index.html** file the line: `<script src="example.js"></script>`
+    1. Create a Javascript file **example.js**
+    2. Add in the final body section on **index.html** file the line: `<script src="example.js"></script>`
 
 ## Basics
 
@@ -72,4 +73,39 @@ mockedRequestPromise("myapi.com/inference/v1")
         console.log("A request failed !");
         console.log(err);
     });
+```
+
+-   **Async keyword:** The async functions always return a promise. If the function returns a value, the promise will be resolved with that value. If the function throws an exception, the promise will be rejected.
+-   **Await keyword:** This keyword can only be used inside of functions declared with async. This feature will pause the execution of the function, waiting for a promise to be resolved.
+
+```js title="Async keyword" linenums="1"
+const login = async (user, pass) => {
+    if (!user || !pass) throw "Missing Credentials !";
+    if (pass === "123456") return "Welcome !";
+    throw "Invalid Password !";
+};
+
+login("foobar", "123456")
+    .then((msg) => {
+        console.log("Logged In !");
+        console.log(msg);
+    })
+    .catch((err) => {
+        console.log("Error !");
+        console.log(err);
+    });
+```
+
+```js title="Await keyword" linenums="1"
+async function makeTwoApiRequest() {
+    try {
+        let data1 = await mockedRequestPromise("myapi.com/inference/v1");
+        console.log(data1);
+        let data2 = await mockedRequestPromise("myapi.com/inference/v2");
+        console.log(data2);
+    } catch (err) {
+        console.log("Error !");
+        console.log(err);
+    }
+}
 ```
