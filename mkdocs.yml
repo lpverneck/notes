@@ -41,8 +41,14 @@ extra:
 
 nav:
     - Home: index.md
+    - Data Science:
+      - Entropy: notebooks/entropy.ipynb
     - Web Development:
       - JavaScript: web-development/javascript.md
+    # - Packages:
+    #   - Poetry: packages/poetry.md
+    #   - Dotenv: packages/dotenv.md
+    #   - Test: notebooks/example_nbs.ipynb
     - Examples:
       - Jupyter Notebook: examples/example_nb.ipynb
       - Mkdocs Material: examples/example_mkdocs_material.md
