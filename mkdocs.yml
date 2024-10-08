@@ -46,6 +46,8 @@ nav:
     - Web Development:
       - JavaScript: web-development/javascript.md
       - API's: web-development/apis.md
+    - Software Engineering:
+      - Environment Variables: software-engineering/env-vars.md
     # - Packages:
     #   - Poetry: packages/poetry.md
     #   - Dotenv: packages/dotenv.md
