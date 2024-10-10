@@ -48,6 +48,7 @@ nav:
       - API's: web-development/apis.md
     - Software Engineering:
       - Environment Variables: software-engineering/env-vars.md
+      - JSON: software-engineering/json.md
     # - Packages:
     #   - Poetry: packages/poetry.md
     #   - Dotenv: packages/dotenv.md
