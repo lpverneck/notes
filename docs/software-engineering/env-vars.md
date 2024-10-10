@@ -15,7 +15,7 @@ The `PATH` environment variable is a list of directories that the operating syst
 
 ## Interacting via Python
 
-```py
+```py linenums="1"
 import os
 
 
