@@ -49,6 +49,7 @@ nav:
     - Software Engineering:
       - Environment Variables: software-engineering/env-vars.md
       - JSON: software-engineering/json.md
+      - YAML: software-engineering/yaml.md
     # - Packages:
     #   - Poetry: packages/poetry.md
     #   - Dotenv: packages/dotenv.md
