@@ -62,3 +62,7 @@ These codes indicate that the server failed to fulfill a valid request.
 A query string is a part of a URL that sends additional information to a web server. It begins with a question mark `?` and consists of key-value pairs separated by ampersands `&`.
 
 Example URL: `https://myapi.com/page?key1=:value&key2=:value`
+
+## HTTP Headers
+
+HTTP headers are also a key-value pairs sent with HTTP requests and responses that provide essential metadata about the communication. They help define aspects such as content type, caching behavior, and authentication details.
