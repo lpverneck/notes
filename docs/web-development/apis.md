@@ -56,3 +56,9 @@ These codes indicate that the server failed to fulfill a valid request.
 
 - __500 Internal Server Error__: A generic error indicating an unexpected condition on the server.
 - __503 Service Unavailable__: The server is currently unable to handle requests due to temporary overload or maintenance.
+
+## Query Strings
+
+A query string is a part of a URL that sends additional information to a web server. It begins with a question mark `?` and consists of key-value pairs separated by ampersands `&`.
+
+Example URL: `https://myapi.com/page?key1=:value&key2=:value`
