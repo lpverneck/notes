@@ -43,6 +43,7 @@ nav:
     - Home: index.md
     - Data Science:
       - Entropy: notebooks/entropy.ipynb
+      - SONDE: notebooks/sonde.ipynb
     - Web Development:
       - JavaScript: web-development/javascript.md
       - API's: web-development/apis.md
