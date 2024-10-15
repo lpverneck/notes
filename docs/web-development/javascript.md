@@ -109,3 +109,67 @@ async function makeTwoApiRequest() {
     }
 }
 ```
+
+## Requesting APIs
+
+```js title="API Request Using Fetch" linenums="1"
+fetch("https://myapi.com/endpoint/1/")
+    .then((res) => {
+        console.log("Resolved !", res);
+        return res.json();
+    })
+    .then((data) => {
+        console.log("Json Done", data);
+    })
+    .catch((e) => {
+        console.log("Error !", e);
+    });
+
+const callAPI = async () => {
+    try {
+        const res = await fetch("https://myapi.com/endpoint/1/");
+        const data = await res.json();
+        console.log(data);
+    } catch (e) {
+        console.log("Error !", e);
+    }
+};
+
+callAPI();
+```
+
+```js title="API Request Using Axios" linenums="1"
+axios
+    .get("https://myapi.com/endpoint/1/")
+    .then((res) => {
+        console.log("Response:", res);
+    })
+    .catch((e) => {
+        console.log("Error !", e);
+    });
+
+const callAPI = async () => {
+    try {
+        const res = await axios.get("https://myapi.com/endpoint/1/");
+        console.log(res.data);
+    } catch (e) {
+        console.log("Error !");
+    }
+};
+
+callAPI();
+```
+
+```js title="API Request Using Axios With Headers" linenums="1"
+const callAPI = async () => {
+    try {
+        const config = { headers: { "application/json" } }
+        const res = await axios.get("https://myapi.com/endpoint/1/", config);
+        console.log(res.data);
+    } catch (e) {
+        console.log("Error !");
+    }
+};
+
+callAPI()
+```
