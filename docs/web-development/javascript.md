@@ -12,7 +12,99 @@
 
 ## Document Object Model (DOM)
 
-:track_next:
+The Document Object Model is a programming interface that represents the structure of HTML and XML documents in a hierarchical tree format. Each element in the document is represented as a node, allowing for dynamic manipulation of the document's content, structure, and style through programming languages, primarily JavaScript.
+
+```js title="Selecting" linenums="1"
+const item = document.getElementByID(id);
+const item = document.getElementsByTagName("img"); // return a HTMLCollection
+const item = document.getElementsByClassName("className"); // return a HTMLCollection
+
+document.querySelector("h1"); // select only the first object
+document.querySelector("#red"); // select only the first object
+document.querySelector(".square"); // select only the first object
+document.querySelectorAll("something"); // select all objects
+```
+
+```js title="Manipulate" linenums="1"
+document.querySelector("p").innerText; // represents the rendered text content
+document.querySelector("p").textContent; // represents the text content
+document.querySelector("p").innerHTML; // gets or sets the HTML or XML markup contained within the element
+
+// Attributes
+document.querySelector("a").href;
+document.querySelector("a").getAttribute("id");
+document.querySelector("a").setAttribute("href", "https://www.google.com");
+
+// Not the best option for change style !
+window.getComputedStyle(h1).fontSize;
+
+// Class List
+document.querySelector("h2").classList.add("class_name_1");
+document.querySelector("h2").classList.add("class_name_2");
+document.querySelector("h2").classList.remove("class_name");
+document.querySelector("h2").classList.toggle("class_name"); // turn ON and OFF a class
+
+// Traversing Parent / Child / Sibling
+selectedObject.parentElement;
+selectedObject.children; // lists the children
+selectedObject.previousSibling;
+selectedObject.nextSibling;
+selectedObject.previousElementSibling;
+selectedObject.nextElementSibling;
+
+// Create and remove elements
+const newH3 = document.createElement("h3");
+newH3.innerText = "New text !";
+document.body.appendChild(newH3);
+p.append("New text");
+p.prepend(newElement);
+element.insertAdjacentElement(position, element); // afterend, beforebegin
+element.after(element);
+parentElement.removeChild(childElement);
+element.remove();
+```
+
+```js title="Events" linenums="1"
+const btn = document.querySelector("#btn-v1");
+btn.onclick = function () {
+    console.log("You clicked me !");
+};
+
+// Using event listener
+const btn = document.querySelector("#btn-v1");
+btn.addEventListener("click", () => {
+    console.log("You clicked me !");
+    this.style.color = "red"; // the keyword THIS refers to the element triggered by the event, in this case 'btn'
+});
+
+// Event Object
+input.addEventListener("keyup", (evt) => {
+    console.log("Up !");
+    console.log(evt.key);
+    console.log(evt.code);
+});
+
+// Prevent default behavior for forms
+const form = document.querySelector("#formID");
+form.addEventListener("submit", function (e) {
+    console.log("Submitted !");
+    e.preventDefault();
+});
+
+// Input and change events
+input.addEventListener("input", function (e) {
+    // "change"
+    console.log("Input changed !");
+});
+
+// Event bubbling
+e.stopPropagation();
+
+// Event Delegation
+containerObj.addEventListener("click", function (e) {
+    e.target.remove();
+});
+```
 
 ## Async
 
