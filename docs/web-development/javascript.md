@@ -265,3 +265,55 @@ const callAPI = async () => {
 
 callAPI()
 ```
+
+## Prototypes, Classes and OOP
+
+```js title="Class Example" linenums="1"
+// Defining the class
+class Vehicle {
+    constructor(type, color, brand, year) {
+        this.type = type;
+        this.color = color;
+        this.brand = brand;
+        this.year = year;
+    }
+
+    start() {
+        // const { t, c, b, y } = this;
+        return "Vehicle started !";
+    }
+
+    stop() {
+        return "Vehicle stopped !";
+    }
+}
+
+// Creating instances of the Vehicle class
+const vehicle1 = new Vehicle("car", "red", "Ford", 2015);
+const vehicle2 = new Vehicle("motorbike", "blue", "Honda", 2018);
+
+// Using methods on the instances
+console.log(vehicle1.start());
+console.log(vehicle2.pickUpPassengers());
+```
+
+```js title="Class Inheritance" linenums="1"
+class Car extends Vehicle {
+    constructor(color, brand, year, doors) {
+        super("car", color, brand, year); // call the parent constructor
+        this.doors = doors; // additional property specific to Car
+    }
+
+    new_method() {
+        return null;
+    }
+}
+
+// Creating an instance of the Car class
+const myCar = new Car("red", "Toyota", 2020, 4);
+
+// Using methods from both the Vehicle and Car classes
+console.log(myCar.start());
+console.log(myCar.new_method());
+console.log(myCar.stop());
+```
