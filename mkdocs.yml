@@ -42,7 +42,9 @@ extra:
 nav:
     - Home: index.md
     - Data Science:
-      - 'A/B Test': notebooks/ab-testing.ipynb
+      - 'A/B Test':
+        - Introduction: notebooks/ab-testing.ipynb
+        - 'Statistical Test Choose': data-science/ab-testing.md
       - Entropy: notebooks/entropy.ipynb
       - SONDE: notebooks/sonde.ipynb
     - Web Development:
