@@ -55,10 +55,12 @@ nav:
       - JSON: software-engineering/json.md
       - YAML: software-engineering/yaml.md
       - Documentation: software-engineering/documentation.md
-    # - Packages:
-    #   - Poetry: packages/poetry.md
-    #   - Dotenv: packages/dotenv.md
-    #   - Test: notebooks/example_nbs.ipynb
+      - Terminal Stuff: software-engineering/terminal.md
+    - Packages:
+      - Poetry: packages/poetry.md
+      - Numpy: packages/numpy.md
+      - Dotenv: packages/dotenv.md
+      - Kedro: packages/kedro.md
     - Examples:
       - Jupyter Notebook: examples/example_nb.ipynb
       - Mkdocs Material: examples/example_mkdocs_material.md
