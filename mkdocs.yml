@@ -57,6 +57,7 @@ nav:
       - Documentation: software-engineering/documentation.md
       - Terminal Stuff: software-engineering/terminal.md
     - Packages:
+      - Tmux: packages/tmux.md
       - Poetry: packages/poetry.md
       - Numpy: packages/numpy.md
       - Dotenv: packages/dotenv.md
