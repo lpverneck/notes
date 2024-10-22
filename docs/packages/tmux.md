@@ -1,56 +1,36 @@
 Tmux, short for terminal multiplexer, is a powerful tool used primarily in Unix-like operating systems. It allows users to manage multiple terminal sessions within a single window, enhancing productivity and multitasking capabilities.
 
-```bash
-# start tmux
+## Main Commands
+
+```bash linenums="1"
+# start new session
 tmux
+tmux new -s <session_name>
 
-# create new window
-# ctrl + B -> C
-
-# move to next window
-# ctrl + B -> N
-
-# move to specific window
-# ctrl + B -> 0, 1, 2, 3
-
-# split pane vertical
-# ctrl + B -> %
-
-# split pane horizontal
-# ctrl + B -> "
-
-# move around panes
-# ctrl + B -> arrows
-
-# command mode
-# ctrl + B -> :
-# rename-window <window_name>
-# rename-session <session_name>
-
-# detach
-# ctrl + B -> D
-
-# list sessions
-# ctrl + B -> s
+# list active sessions
 tmux ls
 
 # attach to existing session
 tmux attach
+tmux attach -t 0
 
-# create new session
-# detach
-tmux
+# kill session
+tmux kill-session -t <session_name>
+tmux rename-session -t 0 <session_name>
 
+# also in command mode
+# rename-window <window_name>
+# rename-session <session_name>
 ```
 
-```bash
-pass
-```
+## Main Default Shortcuts
 
-```bash
-pass
-```
-
-```bash
-pass
-```
+-   List active sessions: ++ctrl+b++ ++s++
+-   Create new Window: ++ctrl+b++ ++c++
+-   Move to next window: ++ctrl+b++ ++n++
+-   Move to specific Window [1]: ++ctrl+b++ ++1++
+-   Split pane vertical: ++ctrl+b++ ++5++
+-   Split pane horizontal: ++ctrl+b++ ++dblquote++
+-   Move around panes: ++ctrl+b++ ++left++ ++down++ ++up++ ++right++
+-   Command mode: ++ctrl+b++ ++colon++
+-   Detach session: ++ctrl+b++ ++d++
