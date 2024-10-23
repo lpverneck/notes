@@ -7,3 +7,7 @@ tags:
 status2: active
 ---
 This is my first page.
+
+```js
+console.log("Hello World !")
+```
