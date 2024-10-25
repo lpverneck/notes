@@ -1,5 +1,6 @@
 ---
 title: Self-Organizing Novelty Detector (SONDE)
+created: 2024-10-25
 tags:
   - active
 publish: true

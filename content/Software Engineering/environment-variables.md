@@ -1,5 +1,6 @@
 ---
 title: Environment Variables
+created: 2024-10-24
 tags:
   - completed
 publish: true
