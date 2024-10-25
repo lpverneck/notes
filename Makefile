@@ -1,4 +1,4 @@
-all: clean_current_notes aux
+all: clean_current_notes aux fetch_pub_notes
 
 clean_current_notes:
 	@echo "[ Step 1 ] Deleting notes from repository ..."
