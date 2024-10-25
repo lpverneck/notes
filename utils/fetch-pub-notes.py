@@ -36,6 +36,16 @@ def _is_note_public(note_path: Path) -> bool:
         return False
 
 
+def _copy_file_modified_time(src_dir: str, target_dir: str) -> None:
+    """Copy the access and modified datetime from the source note to the target
+    one."""
+
+    src_datetime_info = os.stat(src_dir)
+    os.utime(
+        target_dir, (src_datetime_info.st_atime, src_datetime_info.st_mtime)
+    )
+
+
 def copy_public_notes(src_dir: str, target_dir: str) -> None:
     """Selects the public notes in the source folder and copy them to the target
     folder."""
@@ -49,15 +59,13 @@ def copy_public_notes(src_dir: str, target_dir: str) -> None:
                     target_parent_path = (
                         Path(target_dir) / "content" / parent_name
                     )
-                    if os.path.exists(target_parent_path):
-                        shutil.copy(
-                            file_path, target_parent_path / file_path.name
-                        )
-                    else:
+                    if not os.path.exists(target_parent_path):
                         os.mkdir(target_parent_path)
-                        shutil.copy(
-                            file_path, target_parent_path / file_path.name
-                        )
+                    shutil.copy(file_path, target_parent_path / file_path.name)
+                    _copy_file_modified_time(
+                        src_dir=file_path,
+                        target_dir=target_parent_path / file_path.name,
+                    )
 
 
 if __name__ == "__main__":
