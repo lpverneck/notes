@@ -1,6 +1,6 @@
 ---
 title: Numpy
-created: 2024-10-26
+created: 2024-02-24
 tags:
   - completed
 publish: true
