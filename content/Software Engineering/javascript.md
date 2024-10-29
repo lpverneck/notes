@@ -7,11 +7,374 @@ publish: true
 ---
 ## Basics
 
-:track_next:
+### Data Types
+
+- Number
+- String
+- Boolean
+- NaN (Number)
+- Null
+- Undefined
+
+```javascript
+typeof NaN; // number
+
+typeof true; // boolean
+typeof false; // boolean
+
+let someName = value;
+const someName = value;
+var someName = value;
+
+let firstName = "Lucas";
+firstName.length;
+firstName.indexOf("c"); // 2
+firstName.indexOf("as"); // 3
+firstName.indexOf("z"); // -1
+firstName.slice(2, 4); // cas
+firstName.replace("a", "@"); // Luc@s
+
+// Template Literals
+`I counted ${3 + 4} sheeps`; // "I counted 7 sheeps"
+```
+
+```javascript
+// Comparisons Operators
+>
+<
+>=
+<=
+==
+!=
+=== // strict equality
+!== // strict non-equality
+
+// Logical Operators
+&& // and
+|| // or
+! // not
+
+// IF Statements
+if (rating === 3) {
+    console.log("OK! rating = 3");
+}
+else if (rating === 2) {
+    console.log("OK! rating = 2");
+}
+else if (rating === 1) {
+    console.log("OK! rating = 1");
+}
+else {
+    console.log("Invalid Value !")
+}
+
+// Switch Statement
+const day = 2;
+switch (day) {
+    case 1:
+        console.log("Monday");
+        break;
+    case 2:
+        console.log("Tuesday");
+        break;
+    case 3:
+        console.log("Wednesday");
+        break;
+    default:
+        consolge.log("Else Like");
+}
+```
+
+```javascript
+// Print to console, alerts and prompt
+console.log("Hello World !");
+alert("Hi there !");
+prompt("Please enter a number:"); // string format -> needs parseInt(variable)
+```
 
 >[!info] Running JS from Script
 >1. Create a Javascript file **example.js**
 >2. Add in the final body section on **index.html** file the line: `<script src="example.js"></script>`
+
+### Arrays
+
+```javascript
+let my_array = [];
+let my_collection = [12, 15.3, true, null, "hello", NaN, undefined];
+
+let my_array = ["rad", "yellow", "blue"];
+my_array[0] = "red";
+
+// add element to the end
+my_array.push("orange");
+// remove element from the end
+my_array.pop();
+// remove element from start
+my_array.shift();
+// add element to start
+my_array.unshift("orange");
+
+// concat
+oneArray.concat(twoArray);
+
+// includes
+my_array.includes("something"); // true or false
+
+// indexOf
+my_array.indexOf("something"); // element index or -1
+
+// reverse
+my_array.reverse();
+
+// slice
+my_array.slice(3, 8); // return index 3 to 7
+
+// splice
+my_array(1, 0, "new_element");
+
+// sort
+my_array.sort();
+```
+
+### Object Literals
+
+```javascript
+const person = {
+    firstName: "Lucas",
+    lastName: "Silva",
+    age: 28,
+    hobbys: ["guitar", "hiking"],
+    exams: {
+        midterm: 95,
+        final: 80,
+    },
+};
+
+person["firstName"]; // return Lucas
+person.firstName; // return Lucas
+
+person["firstName"] = "James";
+person.firstName = "James";
+
+person.favNumber = 7;
+person["favNumber"] = 7;
+```
+
+### Loops
+
+```javascript
+// For Loop
+for (let i = 1; i <= 10; i++) {
+    console.log(i);
+}
+
+// While Loop
+let count = 0;
+while (count < 10) {
+    count++;
+    console.log(count);
+    // break;
+}
+
+// For ... Of
+const myList = ["Item A", "Item B", "Item C"];
+
+for (let item of myList) {
+    console.log(item);
+}
+
+// For ... In
+for (let item in myDictObj) {
+    console.log(item);
+}
+```
+
+### Functions
+
+```javascript
+function funcName(parameterA, parameterB) {
+    // do something
+    return something;
+}
+
+let response = funcName(argumentA, argumentB);
+
+// Function Expressions
+const add = function (x, y) {
+    return x + y;
+};
+
+add(2, 3); // 5
+
+// Function Scope
+
+// Higher Order Function
+
+// Defining Methods
+const myMath = {
+    PI: 3.14159,
+    square: function (num) {
+        return num * num;
+    },
+    cube: function (num) {
+        return num ** 3;
+    },
+    // New syntax
+    square_new(num) {
+        return num * num;
+    },
+};
+
+myMath.PI; // 3.14159
+myMath.cube(2); // 8
+
+// This -> keyword used to access other properties on the same object
+const person = {
+    first: "James",
+    last: "Bond",
+    fullName() {
+        return `${this.first} ${this.last}`;
+    },
+};
+
+person.fullName(); // "James Bond"
+
+// Try / Catch
+try {
+    hello.toUpperCase();
+} catch (e) {
+    console.log(e);
+    console.log("Error !");
+}
+```
+
+### Callbacks and Array Methods
+
+```javascript
+// .forEach()
+const numbers = [1, 2, 3, 4, 5];
+
+function powerElement(element) {
+    console.log(element ** 2);
+}
+numbers.forEach(powerElement);
+
+// .map()
+// [2, 4, 6, 8, 10]
+let double = numbers.map(function (num) {
+    return num * 2;
+});
+
+// setTimeout()
+setTimeout(() => {
+    console.log("Waiting ...");
+}, 3000);
+
+// setInterval()
+const id = setInterval(() => {
+    console.log(Math.random());
+}, 3000);
+
+// clearInterval()
+clearInterval(id);
+
+// Filter
+// [1, 2]
+numbers.filter((n) => {
+    return n < 3;
+});
+
+// .some()
+const exams = [80, 90, 50, 52, 60, 100];
+exams.some((score) => score >= 75); // true
+
+// .every()
+exams.every((score) => score >= 75); // false
+
+// .reduce()
+const nums = [3, 5, 7, 9, 11];
+nums.reduce((total, currentValue) => {
+    return total + currentValue;
+}); // 35
+
+// 120
+[2, 4, 6, 8].reduce((total, currentValue) => total + currentValue, 100);
+```
+
+### Arrow Functions
+
+```javascript
+// Arrow functions behave differently with the keyword 'this' when used on an object method
+// Example of arrow function
+const sum = (x, y) => {
+    return x + y;
+};
+
+// Alternative 1 (function expression)
+const sum = function (x, y) {
+    return x + y;
+};
+
+// Alternative 2
+function sum(x, y) {
+    return x + y;
+}
+
+// Implicit returns
+const rollDie = () => Math.floor(Math.random() * 6) + 1;
+
+const add = (a, b) => a + b;
+```
+
+### Newer Features
+
+```javascript
+// Default Parameters
+function multiply(a, b = 1) {
+    return a * b;
+}
+
+// Spread
+Math.max(1, 2, 5); // 5
+const nums = [1, 2, 3, 4, 5];
+Math.min(...nums); // 1
+
+// Spread with Array literals
+const newNums = [...nums, ...nums]; // [1, 2, 3, 4, 5, 1, 2, 3, 4, 5];
+
+// Spread with objects
+const feline = { legs: 4, family: "Felidae" };
+let newAnimal = { ...feline, color: "gray" };
+
+// Rest Parameters
+function sum(...nums) {
+    console.log(nums);
+}
+sum(1, 2, 3); // [1, 2, 3]
+
+// Destructuring Array
+const scores = [20, 10, 8, 5, 4, 3];
+const [gold, silver, bronze, ...everyone] = scores;
+gold; // 20
+silver; // 10
+bronze; // 8
+everyone; // [5, 4, 3]
+
+// Destructuring Object
+const user = {
+    email: "something@gmail.com",
+    city: "Juiz de Fora",
+    bio: "random text",
+};
+const { email, city, bio } = user;
+const { bio: description } = user;
+const { bio, name = "N/A" } = user;
+
+// Destructuring Parameters
+function fullName({ firstName, lastName }) {
+    return `${firstName} ${lastName}`;
+}
+```
 
 ## Document Object Model (DOM)
 
