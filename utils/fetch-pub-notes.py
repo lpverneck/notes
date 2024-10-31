@@ -1,7 +1,9 @@
 import os
+import re
 import shutil
 from tqdm import tqdm
 from pathlib import Path
+from typing import List
 
 
 ROOT_FOLDERS = [
@@ -36,6 +38,26 @@ def _is_note_public(note_path: Path) -> bool:
         return False
 
 
+def _search_for_attachments(note_path: Path) -> List[str]:
+    """Given a note path, search for attachments inside the note content and
+    return a list of all found attachments."""
+
+    attachments = []
+
+    with open(note_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    pattern = r"!\[\[(.*?)\]\]"
+    matches = re.findall(pattern, content)
+
+    for match in matches:
+        attachments.append(match)
+
+    attachments = list(set(attachments))
+
+    return attachments
+
+
 def _copy_file_modified_time(src_dir: str, target_dir: str) -> None:
     """Copy the access and modified datetime from the source note to the target
     one."""
@@ -68,6 +90,29 @@ def copy_public_notes(src_dir: str, target_dir: str) -> None:
                     )
 
 
+def copy_notes_attachments(src_dir: str, target_dir: str) -> None:
+    """Copy the public notes attachments from the source folder to the target
+    folder."""
+
+    src_attachments_path = (
+        Path(src_dir) / "04 Resources" / "Assets" / "Attachments"
+    )
+    target_notes_path = Path(target_dir) / "content"
+    target_attachments_path = Path(target_dir) / "content" / "attachments"
+
+    os.mkdir(target_attachments_path)
+
+    all_pub_notes = [x for x in target_notes_path.rglob("*.md")]
+    for file_path in tqdm(all_pub_notes):
+        attachments_list = _search_for_attachments(note_path=file_path)
+        if attachments_list:
+            for item in attachments_list:
+                shutil.copy(
+                    src_attachments_path / item, target_attachments_path / item
+                )
+
+
 if __name__ == "__main__":
     pvt_sb_dir, pub_sb_dir = get_directories_path()
     copy_public_notes(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
+    copy_notes_attachments(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
