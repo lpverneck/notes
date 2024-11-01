@@ -24,8 +24,11 @@ In the context of [[markov-chains|Markov Chains]] each cluster defined by a Gaus
 ```python
 import numpy as np
 import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 from ucimlrepo import fetch_ucirepo
+
+sns.set_theme()
 ```
 
 
@@ -202,22 +205,62 @@ centroids
 
 
 
-
-```python
-# plt.plot(dH);
-```
+## Time Series Data Example
 
 
 ```python
 # fetch dataset
-# iris = fetch_ucirepo(id=53)
-
-# data (as pandas dataframes)
-# X = iris.data.features
-# y = iris.data.targets
+toy_data = fetch_ucirepo(id=849)
+toy_data = pd.DataFrame(
+    toy_data.data.targets["Zone 1 Power Consumption"]
+).values
 ```
 
 
 ```python
-# dH, H, centroids, markov = sonde(X=X.sample(frac=1).values, verbose=False)
+dH, H, centroids, markov = sonde(
+    X=toy_data, verbose=False, sigma=1000, delta=0.08
+)
 ```
+
+
+```python
+print(
+    f"Total Number of Gaussians: {len(centroids)}\n\nCentroids:\n\n{centroids}"
+)
+```
+
+    Total Number of Gaussians: 11
+
+    Centroids:
+
+    [[33312.57309826]
+     [30891.4939403 ]
+     [28318.79031478]
+     [25022.61994598]
+     [36808.20341654]
+     [39446.49818873]
+     [22225.51194093]
+     [13963.59379581]
+     [44080.06259361]
+     [46417.1414591 ]
+     [20081.03920279]]
+
+
+
+```python
+fig, (ax1, ax2, ax3) = plt.subplots(3, figsize=(20, 10))
+fig.suptitle("SONDE Applied to Power Consumption Time Series Data")
+ax1.plot(toy_data[:20000, :], "tab:gray")
+ax2.plot(H[:20000], "tab:orange")
+ax3.plot(dH[:20000], "tab:red")
+ax1.set_ylabel("Power Consumption")
+ax2.set_ylabel("Entropy")
+ax3.set_ylabel(r"Entropy Variation ($\Delta H$)")
+ax3.set_xlabel("Time Series")
+fig.tight_layout();
+```
+
+
+
+![[sonde_output.png]]
