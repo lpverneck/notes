@@ -1,5 +1,5 @@
 import os
-import re
+import regex as re
 import shutil
 from tqdm import tqdm
 from pathlib import Path
