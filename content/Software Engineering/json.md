@@ -5,7 +5,7 @@ tags:
   - completed
 publish: true
 ---
-JSON stands for Java Script Object Notation and is a lightweight format for storing and transporting data.
+JSON stands for 'Java Script Object Notation' and is a lightweight format for storing and transporting data.
 
 ## JSON Data Types
 
@@ -40,7 +40,7 @@ JSON stands for Java Script Object Notation and is a lightweight format for s
 
 ## Handling with Code
 
-```python title="python"
+```python title="Python"
 import json
 
 

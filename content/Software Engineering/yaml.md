@@ -5,7 +5,9 @@ tags:
   - completed
 publish: true
 ---
-Stands for YAML Ain't Markup Language and is a data serialization language. Widely used to written configuration files.
+YAML stands for 'YAML Ain't Markup Language' and is a data serialization language, widely used to written configuration files.
+
+The configuration files can have two different possible extensions: `.yml` or `.yaml`
 
 ## Example File
 
@@ -28,7 +30,7 @@ users:
 	- user002
 	- user003
 
-# List of objects (Dict)
+# List of objects
 microservices:
   - app: user-authentication
     port: 9000
@@ -53,7 +55,9 @@ data:
 	    breakdown the string
 ```
 
-- Use `$VAR_NAME` for accessing environment variables
+## Other Features
+
+- Is possible to use `$VARIABLE_NAME` for accessing environment variables
 - YAML has placeholder features
 - The `---` can be used for separate YAML configurations in the same file
 
