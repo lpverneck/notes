@@ -34,16 +34,17 @@ tmux rename-session -t 0 <session_name>
 
 The shortcuts described here are slight different from the default ones. They are based on my personal Tmux [configuration file](https://github.com/lpverneck/.dotfiles/blob/main/dot_tmux.conf).
 
-- Detach session: `CTRL` + `A` `D`
-- List active sessions and windows: `CTRL` + `A` `S`
--   Create new window: `CTRL` + `A` `C`
--   Move to next window: `CTRL` + `A` `N`
--   Move to specific window: `CTRL` + `A` `<1>`
--   Split pane vertical: `CTRL` + `A` `|`
--   Split pane horizontal: `CTRL` + `A` `-`
--   Move around panes:
-	- Left: `CTRL` + `A` `H`
-	- Down: `CTRL` + `A` `J`
-	- Up: `CTRL` + `A` `K`
-	- Right: `CTRL` + `A` `L`
--   Command mode: `CTRL` + `A` `,`
+| Shortcut           | Description                      |
+| ------------------ | -------------------------------- |
+| `CTRL` + `A` `D`   | Detach session                   |
+| `CTRL` + `A` `S`   | List active sessions and windows |
+| `CTRL` + `A` `C`   | Create new window                |
+| `CTRL` + `A` `N`   | Move to next window              |
+| `CTRL` + `A` `<1>` | Move to specific window          |
+| `CTRL` + `A` `\|`  | Split pane vertical              |
+| `CTRL` + `A` `-`   | Split pane horizontal            |
+| `CTRL` + `A` `H`   | Move around panes (Left)         |
+| `CTRL` + `A` `J`   | Move around panes (Down)         |
+| `CTRL` + `A` `K`   | Move around panes (Up)           |
+| `CTRL` + `A` `L`   | Move around panes (Right)        |
+| `CTRL` + `A` `,`   | Command mode                     |
