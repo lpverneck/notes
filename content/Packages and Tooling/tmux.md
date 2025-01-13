@@ -19,25 +19,31 @@ tmux ls
 
 # attach to existing session
 tmux attach
-tmux attach -t 0
+tmux attach -t <session_name>
 
 # kill session
 tmux kill-session -t <session_name>
 tmux rename-session -t 0 <session_name>
 
-# also in command mode
+# command mode
 # rename-window <window_name>
 # rename-session <session_name>
 ```
 
-## Main Default Shortcuts
+## Main Shortcuts
 
--   List active sessions: ++ctrl+b++ ++s++
--   Create new Window: ++ctrl+b++ ++c++
--   Move to next window: ++ctrl+b++ ++n++
--   Move to specific Window [1]: ++ctrl+b++ ++1++
--   Split pane vertical: ++ctrl+b++ ++5++
--   Split pane horizontal: ++ctrl+b++ ++dblquote++
--   Move around panes: ++ctrl+b++ ++left++ ++down++ ++up++ ++right++
--   Command mode: ++ctrl+b++ ++colon++
--   Detach session: ++ctrl+b++ ++d++
+The shortcuts described here are slight different from the default ones. They are based on my personal Tmux [configuration file](https://github.com/lpverneck/.dotfiles/blob/main/dot_tmux.conf).
+
+- Detach session: `CTRL` + `A` `D`
+- List active sessions and windows: `CTRL` + `A` `S`
+-   Create new window: `CTRL` + `A` `C`
+-   Move to next window: `CTRL` + `A` `N`
+-   Move to specific window: `CTRL` + `A` `<1>`
+-   Split pane vertical: `CTRL` + `A` `|`
+-   Split pane horizontal: `CTRL` + `A` `-`
+-   Move around panes:
+	- Left: `CTRL` + `A` `H`
+	- Down: `CTRL` + `A` `J`
+	- Up: `CTRL` + `A` `K`
+	- Right: `CTRL` + `A` `L`
+-   Command mode: `CTRL` + `A` `,`
