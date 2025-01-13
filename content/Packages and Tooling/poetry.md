@@ -2,31 +2,27 @@
 title: Poetry
 created: 2024-10-26
 tags:
-  - "#active"
+  - completed
 publish: true
 ---
-```bash title="Main Commands"
-poetry new <project_name> (1)
+Poetry is a powerful tool for dependency management and packaging in Python projects. It offers a comprehensive solution for managing project dependencies, virtual environments, and package distribution.
 
-poetry add <package_name> --group dev (3)
+## Useful Commands
 
-poetry show -tree
-
-poetry remove <package_name>
-
-poetry install
-
-poetry env info
-
-poetry shell (2)
-
-exit
-
-poetry env list
-
-poetry env remove <env_name>
-
-poetry build
-
-poetry publish
-```
+| Command                                 | Description                                        |
+| --------------------------------------- | -------------------------------------------------- |
+| `poetry new <project_name>`             | Create a new project                               |
+| `poetry init`                           | Initialize a Poetry project on the current folder  |
+| `poetry shell`                          | Activate virtual environment                       |
+| `poetry add <package_name>`             | Add a dependency                                   |
+| `poetry add <package_name> --group dev` | Add a development dependency                       |
+| `poetry remove <package_name>`          | Remove a dependency                                |
+| `poetry show -tree`                     | Show dependency tree                               |
+| `poetry update`                         | Update dependencies                                |
+| `poetry install` `--only main`          | Install dependencies                               |
+| `poetry env list`                       | List all Poetry virtual environments               |
+| `poetry env info`                       | Get information about currently active environment |
+| `poetry env remove <env_name>`          | Delete virtual environment                         |
+| `poetry build`                          | Builds the project into a distributable format     |
+| `poetry publish`                        | Publish the project                                |
+| `exit`                                  | Close the current active environment               |

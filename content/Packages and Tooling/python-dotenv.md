@@ -5,7 +5,7 @@ tags:
   - completed
 publish: true
 ---
-The python-dotenv reads key-value pairs from a `.env` file and create new environment variables from them.
+The python-dotenv library reads key-value pairs from a `.env` file and create new [[environment-variables|environment variables]] from them.
 
 ```python title="Usage"
 from pathlib import Path
