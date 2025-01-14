@@ -1,5 +1,5 @@
 ---
-title: EJS
+title: Embedded JavaScript (EJS)
 created: 2024-11-12
 tags:
   - completed
