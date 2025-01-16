@@ -9,16 +9,14 @@ publish: true
 
 On a traditional supervised machine learning problem using structured and tabular data, often we have to create a model based on a previous dataset. The model must learn and then map the independent variables (features) $x$ into a dependent variable (target) $y$. This problem can be represented as a system of linear equations as shown below:
 
-$$
-\begin{equation}  
+$$ 
 \begin{cases}  
 w_{1} x_{1}^{(1)} + w_{2} x_{2}^{(1)} + w_{3} x_{3}^{(1)} + ... + w_{n} x_{n}^{(1)} + b = y^{(1)}\\  
 w_{1} x_{1}^{(2)} + w_{2} x_{2}^{(2)} + w_{3} x_{3}^{(2)} + ... + w_{n} x_{n}^{(2)} + b = y^{(2)}\\
 w_{1} x_{1}^{(3)} + w_{2} x_{2}^{(3)} + w_{3} x_{3}^{(3)} + ... + w_{n} x_{n}^{(3)} + b = y^{(3)}\\
 \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\vdots\\
 w_{1} x_{1}^{(m)} + w_{2} x_{2}^{(m)} + w_{3} x_{3}^{(m)} + ... + w_{n} x_{n}^{(m)} + b = y^{(m)}
-\end{cases}  
-\end{equation}
+\end{cases}
 $$
 
 Solve the system of linear equations for $[w_{1}, w_{2}, w_{3}, ..., w_{n}, b]$.
@@ -151,13 +149,11 @@ Is a method for row reduction and so for solving linear systems.
 ### Augmented Matrix
 
 $$
-\begin{equation}  
 \begin{cases}  
 2a - b + c = 1 \\  
 2a + 2b + 4c = -2 \\  
 4a + b = -1  
 \end{cases}  
-\end{equation}
 $$
 $$
 \begin{bmatrix}  
