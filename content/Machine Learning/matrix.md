@@ -9,7 +9,8 @@ publish: true
 
 On a traditional supervised machine learning problem using structured and tabular data, often we have to create a model based on a previous dataset. The model must learn and then map the independent variables (features) $x$ into a dependent variable (target) $y$. This problem can be represented as a system of linear equations as shown below:
 
-$$\begin{equation}  
+$$
+\begin{equation}  
 \begin{cases}  
 w_{1} x_{1}^{(1)} + w_{2} x_{2}^{(1)} + w_{3} x_{3}^{(1)} + ... + w_{n} x_{n}^{(1)} + b = y^{(1)}\\  
 w_{1} x_{1}^{(2)} + w_{2} x_{2}^{(2)} + w_{3} x_{3}^{(2)} + ... + w_{n} x_{n}^{(2)} + b = y^{(2)}\\
@@ -17,11 +18,13 @@ w_{1} x_{1}^{(3)} + w_{2} x_{2}^{(3)} + w_{3} x_{3}^{(3)} + ... + w_{n} x_{n}^{(
 \quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\vdots\\
 w_{1} x_{1}^{(m)} + w_{2} x_{2}^{(m)} + w_{3} x_{3}^{(m)} + ... + w_{n} x_{n}^{(m)} + b = y^{(m)}
 \end{cases}  
-\end{equation}$$
+\end{equation}
+$$
 
 Solve the system of linear equations for $[w_{1}, w_{2}, w_{3}, ..., w_{n}, b]$.
 
-$$\begin{bmatrix}
+$$
+\begin{bmatrix}
 w_{1} & w_{2} & w_{3} & ... & w_{n}
 \end{bmatrix}
 \quad
@@ -38,7 +41,9 @@ y^{(1)} & y^{(2)} & y^{(3)} & ... & y^{(n)}
 \end{bmatrix}
 $$
 
-$$\vec{w}\quad\cdot\quad X \quad + \quad b \quad = \quad \vec{\hat{y}}$$
+$$
+\vec{w}\quad\cdot\quad X \quad + \quad b \quad = \quad \vec{\hat{y}}
+$$
 
 ## System Types
 
@@ -50,7 +55,8 @@ $$\vec{w}\quad\cdot\quad X \quad + \quad b \quad = \quad \vec{\hat{y}}$$
 
 ## Linear Dependence and Independence
 
-$$\begin{bmatrix}  
+$$
+\begin{bmatrix}  
 1 & 1 & 1\\  
 1 & 1 & 2\\
 1 & 1 & 3\\
@@ -73,7 +79,8 @@ $$
 $$
 Det(A) = (1\cdot5\cdot10 + 2\cdot6\cdot7+3\cdot4\cdot8)\\
 -\\
-(3\cdot5\cdot7 + 6\cdot8\cdot1 + 10\cdot4\cdot2) = -3$$
+(3\cdot5\cdot7 + 6\cdot8\cdot1 + 10\cdot4\cdot2) = -3
+$$
 
 ## Elementary Row Operations (EROs)
 
@@ -88,13 +95,15 @@ Det(A) = (1\cdot5\cdot10 + 2\cdot6\cdot7+3\cdot4\cdot8)\\
 - Every **pivot** is to the right of the pivots on the rows above
 - Rank of the matrix is the number of pivots
 
-$$\begin{bmatrix}  
+$$
+\begin{bmatrix}  
 \textbf{3} & * & * & * & *\\  
 0 & 0 & \textbf{1} & * & *\\
 0 & 0 & 0 &\textbf{-4} & *\\
 0 & 0 & 0 &\textbf{0} & 0\\
 0 & 0 & 0 &0 & \textbf{0}
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ## Reduced Row Echelon Form (RREF)
 
@@ -103,13 +112,15 @@ $$\begin{bmatrix}
 - Any number above the pivot has to be $0$
 - Rank of the matrix is the number of pivots
 
-$$\begin{bmatrix}  
+$$
+\begin{bmatrix}  
 \textbf{1} & * & 0 & 0 & *\\  
 0 & 0 & \textbf{1} & 0 & *\\
 0 & 0 & 0 &\textbf{1} & *\\
 0 & 0 & 0 &\textbf{0} & 0\\
 0 & 0 & 0 &0 & \textbf{0}
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 
 ## Rank
 
@@ -119,11 +130,13 @@ If a matrix $A$ have a **full rank**, it means the rank is equal to the matrix o
 
 The rank of a matrix can be calculated based on the number of **pivots** in the row echelon form.
 
-$$M = \begin{bmatrix}  
+$$
+M = \begin{bmatrix}  
 \textbf{1} & 2 & 3\\  
 0 & \textbf{1} & 7\\
 0 & 0 &\textbf{1}
-\end{bmatrix}$$
+\end{bmatrix}
+$$
 $$Rank(M) = 3$$
 
 ## Gaussian Elimination Algorithm
@@ -137,15 +150,19 @@ Is a method for row reduction and so for solving linear systems.
 
 ### Augmented Matrix
 
-$$\begin{equation}  
+$$
+\begin{equation}  
 \begin{cases}  
 2a - b + c = 1 \\  
 2a + 2b + 4c = -2 \\  
 4a + b = -1  
 \end{cases}  
-\end{equation}$$
-$$\begin{bmatrix}  
+\end{equation}
+$$
+$$
+\begin{bmatrix}  
 2 & -1 & 1 & 1\\  
 2 & 2 & 4 & -2\\
 4 & 1 & 0 & -1\\
-\end{bmatrix}$$
+\end{bmatrix}
+$$
