@@ -14,3 +14,5 @@ Linear algebra is a fundamental branch of mathematics that focuses on the study 
 ## Concepts
 
 - [[matrix|Matrix]]
+- [[vector|Vector]]
+- [[linear-transformation|Linear Transformation]]

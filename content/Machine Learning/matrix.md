@@ -162,3 +162,23 @@ $$
 4 & 1 & 0 & -1\\
 \end{bmatrix}
 $$
+
+## Matrix Inverse
+
+Analogous to a number multiplicative inverse, a square $m \times m$ matrix $\mathbf{A}$ is invertible (also non-singular) if there exists an $m \times m$ square matrix $\mathbf{A}^{-1}$ such that:
+
+$$
+\mathbf{A}\mathbf{A}^{-1} = \mathbf{A}^{-1}\mathbf{A} = \mathbf{I}_m
+$$
+
+where $\mathbf{I}_m$ denotes the $m \times m$ identity matrix.
+
+- A matrix is invertible only if $Det(\mathbf{A}) \neq 0$.
+
+## Identity Matrix
+
+The identity matrix of size $m$ is the $m \times m$ square matrix with ones on the main diagonal and zeros elsewhere. Analogous to multiplying a number by $1$, the multiplied object remains the same.
+
+$$
+\mathbf{I}\mathbf{A} = \mathbf{A}\mathbf{I} = \mathbf{A}
+$$

@@ -5,13 +5,14 @@ tags:
   - completed
 publish: true
 ---
-## Vector
+## Characteristics
 
 - Arrow in a hyperplane
 - Magnitude (size)
 - Direction
 
 $$\vec{v} = [v_{1} \quad v_{2} \quad v_{3} \quad ... \quad v_{n}]$$
+
 $$\vec{u} = [u_{1} \quad u_{2} \quad u_{3} \quad ... \quad u_{n}]$$
 
 ## Norm
@@ -30,29 +31,29 @@ Is the most popular norm, also known as the Euclidean distance (norm). It is the
 
 $$\|\vec{v}\|_2 = \sqrt{\sum_{i=1}^n v_i^2}$$
 
-## Vector/Matrix Operations
+## Vector and Matrix Operations
 
-### Sum
+### Vector Sum
 
 $$
 \vec{v} + \vec{u} = \begin{bmatrix} v_1+u_1 & v_2+u_2 & \cdots & v_n+u_n \end{bmatrix}
 $$
 
-### Difference
+### Vector Difference
 
 $$
 \vec{v} - \vec{u} = \begin{bmatrix} v_1-u_1 & v_2-u_2 & \cdots & v_n-u_n \end{bmatrix}
 $$
 
-### Multiply by a scalar
+### Multiply Vector by a Scalar
 
 $$
 \lambda\vec{v}= \begin{bmatrix} \lambda v_1 & \lambda v_2 & \cdots & \lambda v_n \end{bmatrix}
 $$
 
-### Multiply vector vs matrix
+### Multiply Vector vs Matrix
 
-The number of matrix's columns must be equal to the vector row's number. 
+The number of matrix's columns $(3)$ must be equal to the vector row's number $(3)$.
 
 $$
 \begin{bmatrix}  
@@ -74,10 +75,48 @@ c\\
 \end{bmatrix}_{3 \times 1}
 $$
 
-### Vector and matrix transpose
+### Vector and Matrix Transpose
 
-pass
+The transpose is an operation that flips a matrix or vector over its main diagonal, switching its rows and columns. The transpose converts an $m\times n$ matrix into an $n\times m$ matrix.
+
+For a vector $\vec{v}$ and a matrix $\mathbf{A}$:
+
+$$
+\vec{v} = \begin{bmatrix} v_1 \\ v_2 \\ \vdots \\ v_n \end{bmatrix}
+\quad\quad
+\mathbf{A} = \begin{bmatrix} a_{11} & a_{12} & \cdots & a_{1n} \\ a_{21} & a_{22} & \cdots & a_{2n} \\ \vdots & \vdots & \ddots & \vdots \\ a_{m1} & a_{m2} & \cdots & a_{mn} \end{bmatrix}
+$$
+
+The respective transposes are:
+
+$$
+\vec{v}^\intercal = \begin{bmatrix} v_1 & v_2 & \cdots & v_n \end{bmatrix}
+\quad\quad
+\mathbf{A}^\intercal = \begin{bmatrix} a_{11} & a_{21} & \cdots & a_{m1} \\ a_{12} & a_{22} & \cdots & a_{m2} \\ \vdots & \vdots & \ddots & \vdots \\ a_{1n} & a_{2n} & \cdots & a_{mn} \end{bmatrix}
+$$
 
 ### Dot Product
 
-pass
+Also known as inner product, this operation gives an intuition about the projections between the two vectors.
+
+Given the two vectors:
+
+$$
+\mathbf{a} = \begin{bmatrix} a_1 \\ a_2 \\ \vdots \\ a_n \end{bmatrix} \quad \text{and} \quad \mathbf{b} = \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix} 
+$$
+
+The dot product is given by:
+
+$$
+\mathbf{a} \cdot \mathbf{b} = \sum_{i=1}^n a_i b_i = a_1b_1 + a_2b_2 + \cdots + a_nb_n
+$$
+
+The dot product also can be structured as a matrix multiplication:
+
+$$
+\mathbf{a} \cdot \mathbf{b} = \mathbf{a}^\intercal \mathbf{b} = \begin{bmatrix} a_1 & a_2 & \cdots & a_n \end{bmatrix} \begin{bmatrix} b_1 \\ b_2 \\ \vdots \\ b_n \end{bmatrix} = a_1b_1 + a_2b_2 + \cdots + a_nb_n
+$$
+
+- $\mathbf{a} \cdot \mathbf{b} > 0$ : Positive projection
+- $\mathbf{a} \cdot \mathbf{b} = 0$ : Ortogonal vectors
+- $\mathbf{a} \cdot \mathbf{b} < 0$ : Negative projection
