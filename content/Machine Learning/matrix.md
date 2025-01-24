@@ -65,7 +65,7 @@ $$
 
 ## Determinant
 
-If the $Det(A) \not= 0$, then the matrix $A$ is **non-singular**.
+If the $Det(A) \not= 0$, then the matrix $A$ is **non-singular**. Also, the determinant can be interpreted geometrically as the area or volume of a [[linear-transformation|linear transformation]] basis.
 
 $$
 A = \begin{bmatrix}  
@@ -78,6 +78,24 @@ $$
 Det(A) = (1\cdot5\cdot10 + 2\cdot6\cdot7+3\cdot4\cdot8)\\
 -\\
 (3\cdot5\cdot7 + 6\cdot8\cdot1 + 10\cdot4\cdot2) = -3
+$$
+
+### Determinant of a Product
+
+$$
+det(\mathbf{AB}) = det(\mathbf{A}) \cdot det(\mathbf{B})
+$$
+
+### Determinant of Inverse
+
+$$
+det(\mathbf{A}^{-1}) = \frac{1}{det(\mathbf{A})}
+$$
+
+### Determinant of Identity
+
+$$
+det(\mathbf{I}) = 1
 $$
 
 ## Elementary Row Operations (EROs)
