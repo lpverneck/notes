@@ -5,4 +5,8 @@ tags:
   - completed
 publish: true
 ---
-<<< note content >>>
+To project a matrix $\mathbf{A}$ onto a vector $\vec{v}$ :
+
+$$
+\boxed{\underset{R \times L}{\mathbf{A}_P} = \underset{R \times C}{\mathbf{A}} \cdot \underset{C \times L}{\frac{\vec{v}}{\|\vec{v}\|_2}}}
+$$
