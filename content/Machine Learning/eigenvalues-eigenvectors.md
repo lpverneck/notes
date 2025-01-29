@@ -15,11 +15,10 @@ Is a specific [[linear-transformation|basis]] of a vector space in which every v
 - $\lambda_1$ and $\lambda_2$ are the eigenvalues
 
 $$
-\begin{align}
 \mathbf{A}v_1 = \lambda_1v_1
-\newline
+$$
+$$
 \mathbf{A}v_2 = \lambda_2v_2
-\end{align}
 $$
 
 - $\mathbf{A}v = \lambda v$ for each eigenvector / eigenvalue

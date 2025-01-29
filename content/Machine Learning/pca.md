@@ -29,4 +29,4 @@ V = \begin{bmatrix}
 \end{bmatrix}
 $$
 6. Project centered data
-$$\mathbf{X_PCA} = (\mathbf{X} - \mathbf{\mu})\mathbf{V}$$
+$$\mathbf{X_{PCA}} = (\mathbf{X} - \mathbf{\mu})\mathbf{V}$$
