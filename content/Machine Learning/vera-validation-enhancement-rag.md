@@ -25,6 +25,8 @@ B{VERA} --> F(Enhanced Context)
 F(Enhanced Context) --> G(LLM)
 G(LLM) --> |Response| B{VERA}
 B{VERA} --> C(Final Answer)
+
+classDef default fill:#1E1E1E,stroke:#FFFFFF;
 ```
 
 Similar to [[factual-correctness|Factual Correctness]] for estimate the LLM response relevance and adherence this paper uses a strategy of breakdown the complete response into smaller statements.
