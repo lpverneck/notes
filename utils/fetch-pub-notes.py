@@ -133,7 +133,10 @@ def replace_mermaid_diagram_custom_tags(
             with open(file_path, "w", encoding="utf-8") as file:
                 file.write(updated_content)
 
-            print(f"Successfully replaced {count} occurrences in {file_path}.")
+            if count != 0:
+                print(
+                    f"Successfully replaced {count} occurrences in {file_path}."
+                )
         except Exception as e:
             print(f"An error occurred: {e}")
 
