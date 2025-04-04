@@ -112,7 +112,34 @@ def copy_notes_attachments(src_dir: str, target_dir: str) -> None:
                 )
 
 
+def replace_mermaid_diagram_custom_tags(
+    target_dir: str, replacement: str = ""
+):
+    """Replace text between %% markers in a markdown file and save the edited
+    file."""
+
+    target_notes_path = Path(target_dir) / "content"
+    all_pub_notes = [x for x in target_notes_path.rglob("*.md")]
+
+    for file_path in tqdm(all_pub_notes):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                content = file.read()
+
+            # pattern = r'%%\s*(.*?)\s*%%'
+            pattern = r'%%(?s).*?[\'"]theme[\'"]\s*:\s*[\'"]base[\'"].*?%%'
+            updated_content, count = re.subn(pattern, replacement, content)
+
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write(updated_content)
+
+            print(f"Successfully replaced {count} occurrences in {file_path}.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
 if __name__ == "__main__":
     pvt_sb_dir, pub_sb_dir = get_directories_path()
     copy_public_notes(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
     copy_notes_attachments(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
+    replace_mermaid_diagram_custom_tags(target_dir=pub_sb_dir)
