@@ -22,7 +22,7 @@ The main idea here is to project the data into the directions with most variance
 3. Calculate the [[covariance|covariance matrix]]
 $$C=\frac{1}{n-1}(\mathbf{X} - \mathbf{\mu})^T(\mathbf{X} - \mathbf{\mu})$$
 4. Calculate the [[eigenvalues-eigenvectors|eigenvalues and eigenvectors]] for the matrix $C$ and sort them from largest to smallest.
-5. Create the projection matrix:
+5. Create the projection matrix $(k=2)$:
 $$
 V = \begin{bmatrix}  
 \frac{\vec{v_1}}{\|\vec{v_1}\|_2} & \frac{\vec{v_2}}{\|\vec{v_2}\|_2}\\
@@ -30,3 +30,5 @@ V = \begin{bmatrix}
 $$
 6. Project centered data
 $$\mathbf{X_{PCA}} = (\mathbf{X} - \mathbf{\mu})\mathbf{V}$$
+7. Reconstructing the information
+$$\mathbf{X} = \mathbf{X_{PCA}}\cdot\mathbf{V}^T$$

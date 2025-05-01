@@ -10,6 +10,7 @@ Retrieval Augmented Generation (RAG) is a way to enhance a specific context comp
 ## RAG Pipeline
 
 ```mermaid
+
 flowchart TD
 A[Query] -->B(Embeddings)
 C[Documents] -->D(Split into chunks)
@@ -35,4 +36,16 @@ $$S_c(A, B) :=cos(\theta) = \frac{\mathbf{A}\cdot\mathbf{B}}{\|\mathbf{A}\|\cdot
 ## Hierarchical Navigable Small Worlds (HNSW)
 
 Trade precision for speed.
+
+## Chunking Techniques
+
+- Usually breakdown to no more than a few hundred tokens
+
+## Combining Embeddings + BM25
+
+pass
+
+
+[[tf-idf|TF-IDF]] pass
+[[bm25|BM25]] pass
 

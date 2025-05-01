@@ -72,6 +72,7 @@ A web store wants to change the product ranking recommendation system.
 ### Choosing the Right Test
 
 ```mermaid
+
 flowchart TD
 
 A{Discrete metric ?} -->|Yes| B{Large sample size ?}
