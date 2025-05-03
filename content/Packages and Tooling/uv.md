@@ -14,7 +14,7 @@ brew install uv
 ```
 
 > [!note] Note
-> Is a good recommendation to [enable shell autocompletion](https://docs.astral.sh/uv/getting-started/installation/#shell-autocompletion)) for UV commands.
+> Is a good recommendation to [enable shell autocompletion](https://docs.astral.sh/uv/getting-started/installation/#shell-autocompletion) for UV commands.
 
 ## Useful Commands
 
