@@ -32,6 +32,34 @@ logging.critical("Something went very very wrong.")
 
 >On line 5 the class parameter `level` sets the baseline level.
 
+## Basic Usage Example
+
+```python
+# utils/logging_utils.py
+import logging
+
+
+def get_logger(name: str = None) -> logging.Logger:
+	logger = logging.getLogger(name)
+	if not logger.handlers:
+		handler = logging.StreamHandler()
+		formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+		handler.setFormatter(formatter)
+		logger.addHandler(handler)
+		logget.setlevel(logging.INFO)
+	return logger
+```
+
+```python
+# main.py
+from utils.logging_utils import get_logger
+
+
+logger = get_logger(__name__)
+
+logger.info(f"This is a log: {some_variable}")
+```
+
 ## Setup
 
 ### 1. Log Location
