@@ -366,6 +366,36 @@ Usually the Terraform workflow is automated by a [[ci-cd|CI/CD]] pipeline.
 - **Cloud Nuke**: easy cleanup of cloud resources.
 - **Makefile**: prevents human errors.
 
----
+## Templating Module Example
 
-- Add templating example #pending
+```json
+{
+	"Version": "2012-10-17",
+	"Statement": [
+		{
+			"Sid": "AmazonBedrockAgentFoundationModelPolicy",
+			"Effect": "Allow",
+			"Action": [
+				"bedrock:InvokeModel",
+				"bedrock:InvokeModelWithResponseStream"
+			]
+			"Resource": [
+				"arn:aws:bedrock:${region}::foundation-model/*"
+			]
+		}
+	]
+}
+```
+
+```terraform
+resource "template_dir" "policy_template_dir" {
+  source_dir      = "my-folder/policy"
+  destination_dir = "my-folder/policy-ready"
+
+  vars = {
+    region     = local.aws_region
+  }
+}
+
+# document = "${template_dir.policy_template_dir.destination_dir}/policy-bedrock.json"
+```
