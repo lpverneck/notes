@@ -1,20 +1,18 @@
-[tool.poetry]
+[project]
 name = "notes"
 version = "0.1.0"
-description = "Personal reference material and notes"
-authors = ["Lucas Verneck <49991581+lpverneck@users.noreply.github.com>"]
+description = "Add your description here"
 readme = "README.md"
-package-mode = false
+requires-python = ">=3.13"
+dependencies = [
+    "graphviz>=0.21",
+    "matplotlib>=3.11.1",
+    "pandas>=3.0.5",
+    "torch>=2.13.0",
+    "torchvision>=0.28.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.13"
-regex = "^2024.11.6"
-tqdm = "^4.67.0"
-
-
-[tool.poetry.group.dev.dependencies]
-jupyterlab = "^4.3.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+]

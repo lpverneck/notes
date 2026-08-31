@@ -63,9 +63,7 @@ def _copy_file_modified_time(src_dir: str, target_dir: str) -> None:
     one."""
 
     src_datetime_info = os.stat(src_dir)
-    os.utime(
-        target_dir, (src_datetime_info.st_atime, src_datetime_info.st_mtime)
-    )
+    os.utime(target_dir, (src_datetime_info.st_atime, src_datetime_info.st_mtime))
 
 
 def copy_public_notes(src_dir: str, target_dir: str) -> None:
@@ -78,9 +76,7 @@ def copy_public_notes(src_dir: str, target_dir: str) -> None:
         if parent_name != "Templates":
             if _is_note_public(file_path):
                 if parent_name not in ROOT_FOLDERS:
-                    target_parent_path = (
-                        Path(target_dir) / "content" / parent_name
-                    )
+                    target_parent_path = Path(target_dir) / "content" / parent_name
                     if not os.path.exists(target_parent_path):
                         os.mkdir(target_parent_path)
                     shutil.copy(file_path, target_parent_path / file_path.name)
@@ -94,9 +90,7 @@ def copy_notes_attachments(src_dir: str, target_dir: str) -> None:
     """Copy the public notes attachments from the source folder to the target
     folder."""
 
-    src_attachments_path = (
-        Path(src_dir) / "04 Resources" / "Assets" / "Attachments"
-    )
+    src_attachments_path = Path(src_dir) / "04 Resources" / "Assets" / "Attachments"
     target_notes_path = Path(target_dir) / "content"
     target_attachments_path = Path(target_dir) / "content" / "attachments"
 
@@ -107,14 +101,10 @@ def copy_notes_attachments(src_dir: str, target_dir: str) -> None:
         attachments_list = _search_for_attachments(note_path=file_path)
         if attachments_list:
             for item in attachments_list:
-                shutil.copy(
-                    src_attachments_path / item, target_attachments_path / item
-                )
+                shutil.copy(src_attachments_path / item, target_attachments_path / item)
 
 
-def replace_mermaid_diagram_custom_tags(
-    target_dir: str, replacement: str = ""
-):
+def replace_mermaid_diagram_custom_tags(target_dir: str, replacement: str = ""):
     """Replace text between %% markers in a markdown file and save the edited
     file."""
 
@@ -134,9 +124,7 @@ def replace_mermaid_diagram_custom_tags(
                 file.write(updated_content)
 
             if count != 0:
-                print(
-                    f"Successfully replaced {count} occurrences in {file_path}."
-                )
+                print(f"Successfully replaced {count} occurrences in {file_path}.")
         except Exception as e:
             print(f"An error occurred: {e}")
 
