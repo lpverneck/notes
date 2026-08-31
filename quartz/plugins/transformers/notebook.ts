@@ -1,3 +1,4 @@
+import { execSync } from "child_process"
 import fs from "fs/promises"
 import { Element, Root } from "hast"
 import { fromHtml } from "hast-util-from-html"
@@ -21,12 +22,18 @@ interface Options {
   downloadFromGitHub: boolean
   /** Timeout for notebook downloads in ms */
   downloadTimeout: number
+  /** "owner/repo" used to link local notebooks back to GitHub. Auto-detected from the git remote when empty */
+  githubRepo: string
+  /** Branch used when building those GitHub source links */
+  githubBranch: string
 }
 
 const defaultOptions: Options = {
   cacheDir: "quartz/.quartz-cache/notebooks",
   downloadFromGitHub: true,
   downloadTimeout: 10000,
+  githubRepo: "",
+  githubBranch: "main",
 }
 
 interface NotebookCell {
@@ -58,16 +65,50 @@ export const NotebookEmbedding: QuartzTransformerPlugin<Partial<Options>> = (use
 
   const isRemoteUrl = (href: string): boolean => /^[a-z][a-z0-9+.-]*:\/\//i.test(href)
 
+  // Local notebooks aren't emitted to the site, so their header link has to point
+  // at the file on GitHub instead of a path that would 404 once deployed.
+  let repoSlug: string | null | undefined = undefined
+  const getRepoSlug = (): string | null => {
+    if (repoSlug !== undefined) return repoSlug
+    if (opts.githubRepo) {
+      repoSlug = opts.githubRepo
+      return repoSlug
+    }
+    try {
+      const remote = execSync("git config --get remote.origin.url", {
+        encoding: "utf-8",
+        stdio: ["ignore", "pipe", "ignore"],
+      }).trim()
+      const match = remote.match(/github\.com[:/]+(.+?)(?:\.git)?$/)
+      repoSlug = match ? match[1] : null
+    } catch {
+      repoSlug = null
+    }
+    // GitHub Actions always exports this, even if the remote isn't readable
+    repoSlug = repoSlug ?? process.env.GITHUB_REPOSITORY ?? null
+    if (!repoSlug) {
+      console.warn("Could not determine the GitHub repository for local notebook links")
+    }
+    return repoSlug
+  }
+
+  const githubBlobUrl = (repoPath: string): string | null => {
+    const slug = getRepoSlug()
+    if (!slug) return null
+    const encoded = repoPath.split("/").map(encodeURIComponent).join("/")
+    return `https://github.com/${slug}/blob/${opts.githubBranch}/${encoded}`
+  }
+
   // Read a notebook from the local filesystem (relative to the Quartz project root)
-  const loadLocalNotebook = async (href: string): Promise<NotebookData | null> => {
+  const loadLocalNotebook = async (
+    href: string,
+  ): Promise<{ data: NotebookData; repoPath: string } | null> => {
     const cleaned = decodeURIComponent(href.split("#")[0].split("?")[0]).replace(/^\//, "")
-    const candidates = [
-      path.resolve(process.cwd(), cleaned),
-      path.resolve(process.cwd(), "content", cleaned),
-    ]
+    const candidates = [cleaned, `content/${cleaned}`]
     for (const candidate of candidates) {
       try {
-        return JSON.parse(await fs.readFile(candidate, "utf-8")) as NotebookData
+        const raw = await fs.readFile(path.resolve(process.cwd(), candidate), "utf-8")
+        return { data: JSON.parse(raw) as NotebookData, repoPath: candidate }
       } catch {
         continue
       }
@@ -370,6 +411,10 @@ export const NotebookEmbedding: QuartzTransformerPlugin<Partial<Options>> = (use
   transition: all 0.2s ease;
 }
 
+.notebook-link .external-icon {
+  display: none;
+}
+
 .notebook-link:hover {
   border-bottom-style: solid;
   opacity: 0.8;
@@ -578,14 +623,14 @@ html[data-theme='dark'] .notebook-toggle {
     function toggleNotebook(notebook, collapse) {
       const content = notebook.querySelector('.notebook-content');
       const button = notebook.querySelector('.notebook-toggle');
-      
+
       if (!content) return;
-      
+
       if (collapse === undefined) {
         // Toggle if no specific state is provided
         collapse = !notebook.classList.contains('collapsed');
       }
-      
+
       // Simple toggle approach
       if (collapse) {
         notebook.classList.add('collapsed');
@@ -594,7 +639,7 @@ html[data-theme='dark'] .notebook-toggle {
         notebook.classList.remove('collapsed');
         if (button) button.setAttribute('aria-expanded', 'true');
       }
-      
+
       // Save state to localStorage
       const notebookLink = notebook.querySelector('.notebook-link');
       const notebookId = notebookLink ? notebookLink.getAttribute('href') : '';
@@ -604,16 +649,16 @@ html[data-theme='dark'] .notebook-toggle {
         localStorage.setItem('notebookStates', JSON.stringify(savedStates));
       }
     }
-    
+
     // Initialize all notebooks and restore saved states
     const savedStates = JSON.parse(localStorage.getItem('notebookStates') || '{}');
-    
+
     // Function to initialize a notebook - simplified
     function initializeNotebook(notebook) {
       const notebookLink = notebook.querySelector('.notebook-link');
       const notebookId = notebookLink ? notebookLink.getAttribute('href') : '';
       const toggle = notebook.querySelector('.notebook-toggle');
-      
+
       // Ensure the button has a click listener
       if (toggle && !toggle.hasAttribute('data-initialized')) {
         toggle.setAttribute('data-initialized', 'true');
@@ -622,27 +667,27 @@ html[data-theme='dark'] .notebook-toggle {
           toggleNotebook(notebook);
         });
       }
-      
+
       // Restore saved collapsed state if needed
       if (notebookId && savedStates[notebookId]) {
         toggleNotebook(notebook, true);
       }
     }
-    
+
     // Initialize all notebooks on the page
     document.querySelectorAll('.jupyter-notebook-embedded').forEach(notebook => {
       initializeNotebook(notebook);
     });
-    
+
     // Set up a MutationObserver to handle dynamically added notebooks
     const observer = new MutationObserver(mutations => {
       mutations.forEach(mutation => {
         mutation.addedNodes.forEach(node => {
           if (node.nodeType === 1) { // Element node
-            const notebooks = node.classList && node.classList.contains('jupyter-notebook-embedded') 
-              ? [node] 
+            const notebooks = node.classList && node.classList.contains('jupyter-notebook-embedded')
+              ? [node]
               : Array.from(node.querySelectorAll('.jupyter-notebook-embedded'));
-              
+
             notebooks.forEach(notebook => {
               // Use the same initialization function for consistency
               initializeNotebook(notebook);
@@ -651,7 +696,7 @@ html[data-theme='dark'] .notebook-toggle {
         });
       });
     });
-    
+
     observer.observe(document.body, { childList: true, subtree: true });
   });
 })();
@@ -806,10 +851,15 @@ html[data-theme='dark'] .notebook-toggle {
                       // Local notebooks are always read fresh from disk (no cache,
                       // so --serve picks up edits); remote ones use the cache.
                       let notebook = remote ? await loadCachedNotebook(href) : null
+                      let sourceUrl = href
 
                       if (!notebook) {
                         if (!remote) {
-                          notebook = await loadLocalNotebook(href)
+                          const local = await loadLocalNotebook(href)
+                          if (local) {
+                            notebook = local.data
+                            sourceUrl = githubBlobUrl(local.repoPath) ?? href
+                          }
                         } else if (opts.downloadFromGitHub) {
                           notebook = await downloadNotebook(href)
                           if (notebook) {
@@ -818,13 +868,13 @@ html[data-theme='dark'] .notebook-toggle {
                         }
                       }                      // If we have notebook data, embed it
                       if (notebook) {
-                        const notebookHtml = await notebookToHtml(notebook, href)
+                        const notebookHtml = await notebookToHtml(notebook, sourceUrl)
 
                         // Replace the link with embedded notebook
                         node.tagName = "div"
                         node.properties = {
                           className: ["notebook-wrapper-container"],
-                          "data-notebook-url": href
+                          "data-notebook-url": sourceUrl
                         }
 
                         const notebookAst = fromHtml(notebookHtml, { fragment: true })
