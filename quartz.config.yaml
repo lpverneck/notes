@@ -34,7 +34,7 @@ configuration:
         gray: "#94A3B8" # graph links and heavier borders
         darkgray: "#334155" # main body text
         dark: "#0F172A" # header text and icons
-        secondary: "#10B981" # link color and current graph node
+        secondary: "#108036" # link color and current graph node + page title - OK
         tertiary: "#059669" # hover states and visited graph nodes
         highlight: "rgba(16, 185, 129, 0.12)" # internal link background, highlighted text
         textHighlight: "rgba(16, 185, 129, 0.3)" # markdown highlighted text background
@@ -44,7 +44,7 @@ configuration:
         gray: "#475569"
         darkgray: "#CBD5E1"
         dark: "#F8FAFC"
-        secondary: "#10B981"
+        secondary: "#108036" # link color and current graph node + page title - OK
         tertiary: "#34D399"
         highlight: "rgba(16, 185, 129, 0.15)"
         textHighlight: "rgba(16, 185, 129, 0.4)"
@@ -276,12 +276,14 @@ plugins:
       position: beforeBody
       priority: 15
       display: all
-  - source: github:vazome/quartz-jupyter-embed
+  - source: ./plugins/quartz-jupyter-embed
     enabled: true
     options:
       cacheDir: .quartz-cache/notebooks
       downloadFromGitHub: true
       downloadTimeout: 15000
+      repoUrl: https://github.com/lpverneck/notes
+      repoRef: main
     order: 15
 layout:
   groups:

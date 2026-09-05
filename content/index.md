@@ -105,3 +105,8 @@ Lorem ipsum com um [link externo](https://quartz.jzhao.xyz/) e uma nota de rodap
 Nulla facilisi. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Sed posuere consectetur est at lobortis.
 
 [^1]: Esta é uma nota de rodapé de teste, gerada via sintaxe GFM.
+
+
+## Notebook
+
+[micrograd.ipynb](notebooks/nn/micrograd.ipynb)
