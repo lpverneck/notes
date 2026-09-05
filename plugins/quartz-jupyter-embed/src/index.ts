@@ -1,6 +1,6 @@
 import fs from "node:fs/promises"
 import path from "node:path"
-import type { BuildCtx, QuartzTransformerPlugin } from "@quartz-community/types"
+import type { QuartzTransformerPlugin } from "@quartz-community/types"
 import type { Element, Root } from "hast"
 import { fromHtml } from "hast-util-from-html"
 import { defaultSchema, sanitize } from "hast-util-sanitize"
@@ -22,8 +22,9 @@ interface Options {
   /**
    * Base URL of the GitHub repo notebooks live in, e.g. "https://github.com/owner/repo".
    * A link to a `.ipynb` file that isn't already an absolute URL is treated as a path
-   * relative to the Quartz root and resolved against this to build a `blob` URL.
-   * Leave unset to disable this resolution — relative links are then left untouched.
+   * relative to the Quartz root, read straight off disk, and always embedded. This is
+   * used only to build the `blob` URL shown as the embed's source/attribution link.
+   * Leave unset and the raw relative path is shown there instead.
    */
   repoUrl?: string
   /** Git ref (branch, tag, or commit) used when building the `blob` URL above. */
@@ -331,13 +332,7 @@ export const NotebookEmbedding: QuartzTransformerPlugin<Partial<Options>> = (use
 
   return {
     name: "NotebookEmbedding",
-    htmlPlugins(ctx: BuildCtx) {
-      // `--serve` is the local preview/editing loop, so notebooks are embedded
-      // straight from disk there. Any other build (including the one that
-      // produces the deployed site) links out to the file on GitHub instead —
-      // see readLocalNotebook/githubBlobUrl below.
-      const isServe = ctx.argv.serve
-
+    htmlPlugins() {
       return [
         () => {
           return async (tree: Root, _file: unknown) => {
@@ -357,22 +352,13 @@ export const NotebookEmbedding: QuartzTransformerPlugin<Partial<Options>> = (use
                 const href = node.properties!.href as string
                 try {
                   if (!/^https?:\/\//.test(href)) {
-                    // A relative link: resolved against the Quartz root, not
-                    // fetched — see readLocalNotebook.
+                    // A relative link: read straight off the local checkout
+                    // instead of fetched. Both `--serve` and the build that
+                    // ships to GitHub Pages have the full repo on disk, so
+                    // this always embeds — only the header/source link points
+                    // at GitHub, for attribution.
                     const relativePath = href.replace(/^\.?\//, "")
                     const blobUrl = githubBlobUrl(relativePath)
-
-                    if (!isServe) {
-                      // Production build: point straight at the file on GitHub
-                      // rather than embedding it into the built site.
-                      node.properties = {
-                        ...node.properties,
-                        href: blobUrl ?? href,
-                        target: "_blank",
-                        rel: ["noopener", "noreferrer"],
-                      }
-                      return
-                    }
 
                     const notebook = await readLocalNotebook(relativePath)
                     if (!notebook?.cells) {

@@ -83,10 +83,8 @@ const tree = {
 
 // downloadFromGitHub:false keeps this test hermetic: the seeded cache is the
 // only source, and the un-cached link must degrade rather than hang.
-// argv.serve:false matches production — relative links are exercised separately below.
-const buildCtx = { argv: { serve: false } }
 const plugin = NotebookEmbedding({ cacheDir, downloadFromGitHub: false })
-await plugin.htmlPlugins(buildCtx)[0]()(tree, {})
+await plugin.htmlPlugins()[0]()(tree, {})
 
 const serialized = JSON.stringify(link)
 
@@ -143,10 +141,7 @@ const tree2 = {
   type: "root",
   children: [{ type: "element", tagName: "p", properties: {}, children: [link2] }],
 }
-await NotebookEmbedding({ cacheDir, downloadFromGitHub: false }).htmlPlugins(buildCtx)[0]()(
-  tree2,
-  {},
-)
+await NotebookEmbedding({ cacheDir, downloadFromGitHub: false }).htmlPlugins()[0]()(tree2, {})
 
 const serialized2 = JSON.stringify(link2)
 assert.match(serialized2, /notebook-favicon/, "cached favicon must be used")
@@ -164,9 +159,9 @@ JSON.parse(serialized2, function walk(k, v) {
 })
 assert.deepEqual(favicons, ["span"], "favicon must be a background-image span, not an <img>")
 
-// Relative links (not http/https) are resolved against the Quartz root instead
-// of fetched. `--serve` embeds straight from disk; any other build just links
-// out to the file on GitHub, which is why the two modes need their own checks.
+// Relative links (not http/https) are read straight off disk instead of
+// fetched, and always embedded — both `--serve` and the build that ships to
+// GitHub Pages have the full repo checked out locally.
 const repoRoot = await fs.mkdtemp(path.join(os.tmpdir(), "jupyter-embed-repo-"))
 await fs.mkdir(path.join(repoRoot, "notebooks"), { recursive: true })
 await fs.writeFile(path.join(repoRoot, "notebooks", "local.ipynb"), JSON.stringify(NOTEBOOK))
@@ -180,19 +175,18 @@ try {
     properties: { href: "notebooks/local.ipynb" },
     children: [{ type: "text", value: "local.ipynb" }],
   }
-  const serveTree = {
+  const localTree = {
     type: "root",
     children: [{ type: "element", tagName: "p", properties: {}, children: [localLink] }],
   }
-  const serveCtx = { argv: { serve: true } }
   const repoPlugin = NotebookEmbedding({
     cacheDir,
     downloadFromGitHub: false,
     repoUrl: "https://github.com/owner/repo",
   })
-  await repoPlugin.htmlPlugins(serveCtx)[0]()(serveTree, {})
+  await repoPlugin.htmlPlugins()[0]()(localTree, {})
 
-  assert.equal(localLink.tagName, "div", "--serve must embed a local notebook")
+  assert.equal(localLink.tagName, "div", "a relative link must be embedded")
   assert.equal(
     localLink.properties["data-notebook-url"],
     "https://github.com/owner/repo/blob/main/notebooks/local.ipynb",
@@ -200,28 +194,8 @@ try {
   )
   assert.match(JSON.stringify(localLink), /Heading/, "local notebook content must render")
 
-  const prodLink = {
-    type: "element",
-    tagName: "a",
-    properties: { href: "notebooks/local.ipynb" },
-    children: [{ type: "text", value: "local.ipynb" }],
-  }
-  const prodTree = {
-    type: "root",
-    children: [{ type: "element", tagName: "p", properties: {}, children: [prodLink] }],
-  }
-  await repoPlugin.htmlPlugins(buildCtx)[0]()(prodTree, {})
-
-  assert.equal(prodLink.tagName, "a", "production build must not embed a local notebook")
-  assert.equal(
-    prodLink.properties.href,
-    "https://github.com/owner/repo/blob/main/notebooks/local.ipynb",
-    "production build must redirect to the file on GitHub",
-  )
-  assert.deepEqual(prodLink.properties.rel, ["noopener", "noreferrer"])
-
-  // Without repoUrl configured, a relative link in production is left as-is
-  // rather than pointed nowhere.
+  // Without repoUrl configured, the embed still happens — only the
+  // source/attribution link falls back to the raw relative path.
   const noRepoLink = {
     type: "element",
     tagName: "a",
@@ -232,11 +206,12 @@ try {
     type: "root",
     children: [{ type: "element", tagName: "p", properties: {}, children: [noRepoLink] }],
   }
-  await NotebookEmbedding({ cacheDir, downloadFromGitHub: false }).htmlPlugins(buildCtx)[0]()(
+  await NotebookEmbedding({ cacheDir, downloadFromGitHub: false }).htmlPlugins()[0]()(
     noRepoTree,
     {},
   )
-  assert.equal(noRepoLink.properties.href, "notebooks/local.ipynb")
+  assert.equal(noRepoLink.tagName, "div", "embedding must not require repoUrl")
+  assert.equal(noRepoLink.properties["data-notebook-url"], "notebooks/local.ipynb")
 } finally {
   process.chdir(originalCwd)
   await fs.rm(repoRoot, { recursive: true, force: true })

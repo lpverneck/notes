@@ -58,16 +58,13 @@ Notebooks collapse by clicking the header, and the collapsed state persists in
 
 A link that is **not** an absolute `http(s)://` URL — e.g. `[demo](notebooks/demo.ipynb)` —
 is treated as a path relative to the Quartz root (the directory `quartz.config.yaml` lives
-in) instead of being fetched:
+in) and read straight off disk instead of being fetched. It is always embedded — both
+`npx quartz build --serve` and the build that ships to GitHub Pages have the full repo
+checked out locally. No caching for these: every rebuild picks up the latest edit.
 
-- **`npx quartz build --serve`** (local preview): the notebook is read straight off disk and
-  embedded, same as a remote one. No caching — every rebuild picks up the latest edit.
-- **Any other build** (`npx quartz build`, including the one that produces the deployed
-  site): the link is left as a plain link, rewritten to point at the file on GitHub —
-  `${repoUrl}/blob/${repoRef}/<path>` — instead of being embedded.
-
-This needs `repoUrl` set (see Options). Without it, a relative link in a non-`--serve` build
-is left untouched.
+The embed's header/source link still points at GitHub — `${repoUrl}/blob/${repoRef}/<path>`
+— for attribution, which needs `repoUrl` set (see Options). Without it, the raw relative
+path is shown there instead.
 
 ### Options
 

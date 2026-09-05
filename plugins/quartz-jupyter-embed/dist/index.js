@@ -24829,8 +24829,7 @@ var NotebookEmbedding = (userOpts) => {
   };
   return {
     name: "NotebookEmbedding",
-    htmlPlugins(ctx) {
-      const isServe = ctx.argv.serve;
+    htmlPlugins() {
       return [
         () => {
           return async (tree, _file) => {
@@ -24849,15 +24848,6 @@ var NotebookEmbedding = (userOpts) => {
                   if (!/^https?:\/\//.test(href)) {
                     const relativePath = href.replace(/^\.?\//, "");
                     const blobUrl = githubBlobUrl(relativePath);
-                    if (!isServe) {
-                      node2.properties = {
-                        ...node2.properties,
-                        href: blobUrl ?? href,
-                        target: "_blank",
-                        rel: ["noopener", "noreferrer"]
-                      };
-                      return;
-                    }
                     const notebook2 = await readLocalNotebook(relativePath);
                     if (!notebook2?.cells) {
                       node2.properties = {

@@ -10,8 +10,9 @@ interface Options {
     /**
      * Base URL of the GitHub repo notebooks live in, e.g. "https://github.com/owner/repo".
      * A link to a `.ipynb` file that isn't already an absolute URL is treated as a path
-     * relative to the Quartz root and resolved against this to build a `blob` URL.
-     * Leave unset to disable this resolution — relative links are then left untouched.
+     * relative to the Quartz root, read straight off disk, and always embedded. This is
+     * used only to build the `blob` URL shown as the embed's source/attribution link.
+     * Leave unset and the raw relative path is shown there instead.
      */
     repoUrl?: string;
     /** Git ref (branch, tag, or commit) used when building the `blob` URL above. */
