@@ -29,12 +29,12 @@ configuration:
         includeItalic: false
     colors:
       lightMode:
-        light: "#FFFFFF" # page background
-        lightgray: "#E2E8F0" # borders and subtle dividers
+        light: "#F8FAF8" # page background - ok
+        lightgray: "#E2E8F0" # borders and subtle dividers - ok
         gray: "#94A3B8" # graph links and heavier borders
         darkgray: "#334155" # main body text
         dark: "#0F172A" # header text and icons
-        secondary: "#108036" # link color and current graph node + page title - OK
+        secondary: "#108036" # link color, current graph node and page title - ok
         tertiary: "#059669" # hover states and visited graph nodes
         highlight: "rgba(16, 185, 129, 0.12)" # internal link background, highlighted text
         textHighlight: "rgba(16, 185, 129, 0.3)" # markdown highlighted text background
