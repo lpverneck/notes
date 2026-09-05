@@ -8,7 +8,7 @@ tags:
 
 # Lorem Ipsum Dolor Sit Amet
 
-Lorem ipsum dolor sit amet, **consectetur adipiscing elit**, sed do eiusmod *tempor incididunt* ut labore et dolore magna aliqua. Ut enim ad minim veniam, ~~quis nostrud exercitation~~ ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in `reprehenderit` in voluptate velit esse cillum dolore.
+Lorem ipsum dolor sit amet, **consectetur adipiscing elit**, sed do eiusmod _tempor incididunt_ ut labore et dolore magna aliqua. Ut enim ad minim veniam, ~~quis nostrud exercitation~~ ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in `reprehenderit` in voluptate velit esse cillum dolore.
 
 ==Este trecho está destacado (highlight) para testar a cor de `textHighlight`.==
 
@@ -49,12 +49,12 @@ Lista de tarefas:
 
 ## Tabela
 
-| Recurso        | Plugin                              | Status |
-| -------------- | ------------------------------------ | :----: |
-| Tipografia     | `@quartz-community/quartz-fonts`     |   ✅   |
-| Realce de código | `@quartz-community/syntax-highlighting` |   ✅   |
-| Tabela de conteúdo | `@quartz-community/table-of-contents` |   ✅   |
-| LaTeX          | `@quartz-community/latex`            |   ✅   |
+| Recurso            | Plugin                                  | Status |
+| ------------------ | --------------------------------------- | :----: |
+| Tipografia         | `@quartz-community/quartz-fonts`        |   ✅   |
+| Realce de código   | `@quartz-community/syntax-highlighting` |   ✅   |
+| Tabela de conteúdo | `@quartz-community/table-of-contents`   |   ✅   |
+| LaTeX              | `@quartz-community/latex`               |   ✅   |
 
 ## Código
 
