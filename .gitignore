@@ -9,4 +9,6 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
-.ipynb_checkpoints/
+.quartz/
+quartz/cli/tui/dist/
+.turbo/
