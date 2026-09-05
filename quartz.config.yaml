@@ -39,15 +39,15 @@ configuration:
         highlight: "rgba(16, 185, 129, 0.12)" # internal link background, highlighted text - ok
         textHighlight: "rgba(16, 185, 129, 0.3)" # markdown highlighted text background - ok
       darkMode:
-        light: "#0B0F19"
-        lightgray: "#1E293B"
-        gray: "#475569"
-        darkgray: "#CBD5E1"
-        dark: "#F8FAFC"
-        secondary: "#108036" # link color and current graph node + page title - OK
-        tertiary: "#34D399"
-        highlight: "rgba(16, 185, 129, 0.15)"
-        textHighlight: "rgba(16, 185, 129, 0.4)"
+        light: "#0B0F19" # page background - ok
+        lightgray: "#1E293B" # borders and subtle dividers - ok
+        gray: "#475569" # graph links and heavier borders - ok
+        darkgray: "#CBD5E1" # main body text - ok
+        dark: "#F8FAFC" # header text and icons - ok
+        secondary: "#22C55E" # link color, current graph node and page title - contrast fix (8.4:1 AAA, same hue family as light mode)
+        tertiary: "#4ADE80" # hover states and visited graph nodes - ok (11:1 AAA)
+        highlight: "rgba(16, 185, 129, 0.15)" # internal link background, highlighted text - ok
+        textHighlight: "rgba(16, 185, 129, 0.4)" # markdown highlighted text background - ok
 plugins:
   - source: "@quartz-community/created-modified-date"
     enabled: true
