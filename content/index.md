@@ -106,7 +106,6 @@ Nulla facilisi. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor a
 
 [^1]: Esta é uma nota de rodapé de teste, gerada via sintaxe GFM.
 
-
 ## Notebook
 
 [micrograd.ipynb](notebooks/nn/micrograd.ipynb)
