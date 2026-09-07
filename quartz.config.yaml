@@ -13,20 +13,14 @@ configuration:
     - templates
     - .obsidian
   theme:
-    fontOrigin: googleFonts
+    # Both fonts are self-hosted in quartz/static/fonts and declared as
+    # @font-face in quartz/styles/custom.scss, so nothing is fetched from a CDN.
+    fontOrigin: local
     cdnCaching: true
     typography:
-      header:
-        name: Inter
-        weights: [400, 600, 700]
-      body:
-        name: Inter
-        weights: [400, 600, 700]
-        includeItalic: true
-      code:
-        name: Monaspace Neon
-        weights: [400, 500, 600]
-        includeItalic: false
+      header: iA Writer Quattro S
+      body: iA Writer Quattro S
+      code: Monaspace Neon
     colors:
       lightMode:
         light: "#F8FAF8" # page background - ok
@@ -106,20 +100,10 @@ plugins:
   - source: "@quartz-community/roam"
     enabled: false
     order: 92
+  # Disabled: it would override configuration.theme.typography above with a
+  # font family injected without quotes or a fallback stack.
   - source: "@quartz-community/quartz-fonts"
-    enabled: true
-    options:
-      fontOrigin: googleFonts
-      header:
-        name: Inter
-        weights: [400, 600, 700]
-      body:
-        name: Inter
-        weights: [400, 600, 700]
-        includeItalic: true
-      code:
-        name: Monaspace Neon
-        weights: [400, 500, 600]
+    enabled: false
   - source: "@quartz-themes/core"
     enabled: false
     options:

@@ -36,8 +36,8 @@ Lista ordenada:
 
 Lista de tarefas:
 
-- [x] Configurar fonte Inter no corpo do texto
-- [x] Configurar fonte Fira Code nos blocos de código
+- [x] Configurar fonte iA Writer Quattro S no corpo do texto
+- [x] Configurar fonte Monaspace Neon nos blocos de código
 - [ ] Revisar paleta de cores light/dark
 - [ ] Validar responsividade mobile
 
