@@ -98,7 +98,7 @@ $$
 
 ## Links e referências
 
-Lorem ipsum com um [link externo](https://quartz.jzhao.xyz/) e uma nota de rodapé[^1].
+Lorem ipsum com um [link externo](https://github.com/lpverneck/notes) e uma nota de rodapé[^1].
 
 ---
 
