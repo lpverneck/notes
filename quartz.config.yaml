@@ -231,8 +231,9 @@ plugins:
     enabled: true
     options:
       links:
-        GitHub: https://github.com/lpverneck
-        Fonte deste site: https://github.com/lpverneck/notes
+        linkedin: https://www.linkedin.com/in/lpverneck
+        github: https://github.com/lpverneck
+        𝕏: https://x.com/lpverneck
     layout:
       position: footer
       priority: 50

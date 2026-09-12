@@ -112,3 +112,41 @@ $breadcrumbAlignHeight: 2.2rem;
     min-height: $breadcrumbAlignHeight;
   }
 }
+
+body footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.25rem 1rem;
+  font-size: 0.85rem;
+
+  p {
+    order: 2;
+    margin: 0;
+    text-transform: lowercase;
+  }
+
+  p a {
+    text-transform: none;
+    &::after {
+      content: ",";
+      display: inline-block;
+      color: var(--darkgray);
+    }
+  }
+
+  ul {
+    order: 1;
+    margin-top: 0;
+    gap: 0.5rem;
+    align-items: baseline;
+  }
+
+  li:not(:last-child)::after {
+    content: "|";
+    margin-left: 0.5rem;
+    color: var(--lightgray);
+    user-select: none;
+  }
+}
