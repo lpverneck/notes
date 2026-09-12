@@ -61,3 +61,54 @@
   font-style: italic;
   font-display: swap;
 }
+
+// Breadcrumbs com cara de prompt de terminal: ~ / folder / nota
+.breadcrumb-container {
+  font-family: var(--codeFont);
+  font-size: 0.85rem;
+  gap: 0;
+  align-items: center;
+
+  a {
+    color: var(--gray);
+    background-color: transparent;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--secondary);
+      text-decoration: underline;
+    }
+  }
+
+  // separador "/" — mais apagado que os segmentos
+  .breadcrumb-element p {
+    margin: 0 0.4rem;
+    color: var(--lightgray);
+    user-select: none;
+  }
+
+  // segmento atual (último, sem href): destacado como o cwd no prompt
+  .breadcrumb-element:last-child a {
+    color: var(--darkgray);
+    font-weight: $semiBoldWeight;
+    cursor: default;
+    pointer-events: none;
+  }
+}
+
+// Alinha verticalmente o título da sidebar esquerda com o breadcrumb da coluna
+// central. Os dois já partem de $topSpacing, mas o breadcrumb trazia um
+// margin-top próprio; zerando-o e dando a ambos a mesma faixa de altura, os
+// textos — de tamanhos bem diferentes — passam a dividir o mesmo centro.
+$breadcrumbAlignHeight: 2.2rem;
+
+@media all and not ($mobile) {
+  .page-title {
+    line-height: $breadcrumbAlignHeight;
+  }
+
+  .breadcrumb-container {
+    margin-top: 0;
+    min-height: $breadcrumbAlignHeight;
+  }
+}
