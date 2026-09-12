@@ -1,11 +1,11 @@
 ---
-title: Lucas's notes.
+title: lucas's notes.
 ---
 
-Hi, I'm Lucas! 👋
+hi, i'm lucas! 👋
 
-Curious. Generalist. Forever a student. Trying to keep things as simple as possible.
+curious. generalist. forever a student. trying to keep things as simple as possible.
 
-I work as a data scientist focusing on designing, building, and deploying end-to-end ML/AI systems that translate complex business problems into measurable positive impact.
+i work as a data scientist focusing on designing, building, and deploying end-to-end ML/AI systems that translate complex business problems into measurable positive impact.
 
-Feel free to [reach out](mailto:email@email.com) if you’d like to talk.
+feel free to [reach out](mailto:email@email.com) if you’d like to talk.
