@@ -1,5 +1,5 @@
 ---
-title: lucas's notes.
+title: Lucas's notes.
 ---
 
 hi, i'm lucas! 👋
