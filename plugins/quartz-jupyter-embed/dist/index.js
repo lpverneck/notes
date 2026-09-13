@@ -24899,12 +24899,21 @@ var NotebookEmbedding = (userOpts) => {
           {
             inline: true,
             content: `
+/* Pastel derivatives of the site's green accent. Kept as local tokens so the
+   embed reads as a quiet panel rather than a highlighted callout, while still
+   sitting in the same hue family as --secondary/--tertiary. */
 .jupyter-notebook-embedded {
-  border: 2px solid var(--secondary);
+  --nb-border: #cfe0d5;
+  --nb-divider: #e6eee9;
+  --nb-surface: #edf5f0;
+  --nb-header-text: #2c5f44;
+  --nb-label: #4a7560;
+
+  border: 1px solid var(--nb-border);
   border-radius: 12px;
   margin: 1.5rem 0;
   background: var(--light);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(23, 35, 54, 0.06);
   overflow: hidden;
 }
 
@@ -24931,11 +24940,11 @@ var NotebookEmbedding = (userOpts) => {
 }
 
 .notebook-header {
-  background: var(--secondary);
+  background: var(--nb-surface);
   padding: 0.6rem 1.5rem;
-  border-bottom: 1px solid var(--gray);
-  font-weight: 700;
-  color: var(--light);
+  border-bottom: 1px solid var(--nb-border);
+  font-weight: 600;
+  color: var(--nb-header-text);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -25008,7 +25017,7 @@ var NotebookEmbedding = (userOpts) => {
 }
 
 .notebook-cell {
-  border-bottom: 1px solid var(--lightgray);
+  border-bottom: 1px solid var(--nb-divider);
   padding: 0.75rem 1.5rem;
 }
 
@@ -25045,7 +25054,7 @@ var NotebookEmbedding = (userOpts) => {
 
 .notebook-execution-count,
 .notebook-output-label {
-  color: var(--secondary);
+  color: var(--nb-label);
   font-family: var(--codeFont, monospace);
   font-size: 0.9em;
   font-weight: bold;
@@ -25077,7 +25086,7 @@ var NotebookEmbedding = (userOpts) => {
 .notebook-text-output pre,
 .notebook-stream-output pre {
   background: var(--lightgray);
-  border: 1px solid var(--gray);
+  border: 1px solid var(--nb-border);
   border-radius: 6px;
   padding: 0.75rem;
   margin: 0;
@@ -25100,7 +25109,7 @@ var NotebookEmbedding = (userOpts) => {
   text-align: center;
   padding: 1rem;
   background: var(--lightgray);
-  border: 1px solid var(--gray);
+  border: 1px solid var(--nb-border);
   border-radius: 6px;
   margin: 0.5rem 0;
 }
@@ -25137,19 +25146,20 @@ var NotebookEmbedding = (userOpts) => {
 /* Quartz sets saved-theme, not data-theme. The v4 version of this plugin used
    data-theme, so none of its dark-mode rules ever matched. */
 :root[saved-theme="dark"] .jupyter-notebook-embedded {
+  --nb-border: #273a30;
+  --nb-divider: #1c2a24;
+  --nb-surface: #14201b;
+  --nb-header-text: #a3d9b8;
+  --nb-label: #7fb795;
+
   background: var(--light);
+  box-shadow: none;
 }
 
 :root[saved-theme="dark"] .notebook-text-output pre,
 :root[saved-theme="dark"] .notebook-stream-output pre,
 :root[saved-theme="dark"] .notebook-image-output {
   background: var(--lightgray);
-  border-color: var(--gray);
-}
-
-:root[saved-theme="dark"] .notebook-execution-count,
-:root[saved-theme="dark"] .notebook-output-label {
-  color: var(--tertiary);
 }
 
 :root[saved-theme="dark"] .notebook-error-output pre {
