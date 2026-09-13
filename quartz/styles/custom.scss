@@ -114,7 +114,12 @@ $breadcrumbAlignHeight: 2.2rem;
   }
 }
 
+// O plugin do rodapé entrega a licença do site dentro do mesmo <ul> dos links
+// sociais; este seletor a isola do resto da lista.
+$footerLicense: "a[href*='creativecommons.org']";
+
 body footer {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -144,11 +149,40 @@ body footer {
     align-items: baseline;
   }
 
-  li:not(:last-child)::after {
+  // "|" entre os links sociais. O separador vem antes de cada item para que a
+  // licença, que fecha a lista no DOM, nunca deixe um "|" solto no fim.
+  li:not(:first-child):not(:has(#{$footerLicense}))::before {
     content: "|";
-    margin-left: 0.5rem;
+    margin-right: 0.5rem;
     color: var(--lightgray);
     user-select: none;
+  }
+
+  li:has(#{$footerLicense}) {
+    // No fluxo (mobile) a licença fecha a lista, com um respiro a mais.
+    margin-left: 0.75rem;
+
+    a {
+      color: var(--gray);
+
+      &:hover {
+        color: var(--secondary);
+      }
+    }
+  }
+}
+
+// Da faixa de tablet para cima há largura para três blocos: sociais à esquerda,
+// copyright à direita e a licença no centro. Como ela nasce dentro do <ul>, só
+// sai do fluxo para ancorar no centro exato do footer; no mobile o rodapé é
+// estreito demais e ela volta ao fim da lista.
+@media all and not ($mobile) {
+  body footer li:has(#{$footerLicense}) {
+    position: absolute;
+    left: 50%;
+    margin-left: 0;
+    transform: translateX(-50%);
+    white-space: nowrap;
   }
 }
 

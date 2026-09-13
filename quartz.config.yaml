@@ -234,6 +234,7 @@ plugins:
         linkedin: https://www.linkedin.com/in/lpverneck
         github: https://github.com/lpverneck
         𝕏: https://x.com/lpverneck
+        cc by-nc-sa: https://creativecommons.org/licenses/by-nc-sa/4.0/
     layout:
       position: footer
       priority: 50
