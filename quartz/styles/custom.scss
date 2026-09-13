@@ -316,3 +316,16 @@ body footer {
     display: none;
   }
 }
+
+:root {
+  --codeLineHover: color-mix(in srgb, var(--darkgray) 7%, transparent);
+}
+
+@media (hover: hover) {
+  pre:not(:has(> code.mermaid)) > code > [data-line]:hover {
+    background-image: linear-gradient(var(--codeLineHover), var(--codeLineHover));
+    &::before {
+      color: var(--darkgray);
+    }
+  }
+}
