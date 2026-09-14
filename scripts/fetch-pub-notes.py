@@ -7,11 +7,16 @@ from typing import List
 
 
 ROOT_FOLDERS = [
+    "00 North Star",
     "01 Inbox",
     "02 Projects",
     "03 Areas",
     "04 Resources",
     "05 Archive",
+    "Clippings",
+    "Machine Learning",
+    "Packages and Tooling",
+    "Software Engineering",
 ]
 
 

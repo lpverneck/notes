@@ -1,13 +1,9 @@
-all: clean_current_notes aux fetch_pub_notes
+all: clean_current_notes fetch_pub_notes
 
 clean_current_notes:
 	@echo "[ Step 1 ] Deleting notes from repository ..."
-	rm -rf content/{,.[!.],..?}*
-
-aux:
-	@echo "[ Step 2 ] Creating auxiliar 'index.md' file ..."
-	touch content/index.md
+	find content -mindepth 1 -not -path "content/index.md" -exec rm -rf {} + 2>/dev/null
 
 fetch_pub_notes:
-	@echo "[ Step 3 ] Fetching public notes ..."
+	@echo "[ Step 2 ] Fetching public notes ..."
 	uv run scripts/fetch-pub-notes.py
