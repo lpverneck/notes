@@ -188,31 +188,33 @@ body footer {
 
 :root {
   --left-sidebar-width: 18rem;
+  --content-gutter: 2.5rem;
   --left-sidebar-bg: color-mix(in srgb, var(--darkgray) 4%, var(--light));
 }
 
 @media all and ($tablet) {
   :root {
     --left-sidebar-width: 15rem;
+    --content-gutter: 1.5rem;
   }
 }
+
+$rightPanelMin: 1450px;
+$withRightPanel: "(min-width: #{$rightPanelMin})";
+$withoutRightPanel: "(min-width: #{map.get($breakpoints, mobile)}) and (max-width: #{$rightPanelMin - 1px})";
 
 @media all and not ($mobile) {
   .page[data-frame="default"] {
     box-sizing: border-box;
     max-width: none;
-    padding-left: var(--left-sidebar-width);
+    padding-left: calc(var(--left-sidebar-width) + var(--content-gutter));
+    padding-right: var(--content-gutter);
   }
 
   .page[data-frame="default"] > #quartz-body {
     max-width: calc(#{map.get($breakpoints, desktop)} + 500px - #{$sidePanelWidth});
     margin: 0 auto;
-    grid-template-columns: auto #{$sidePanelWidth};
-    grid-template-rows: auto auto auto;
-    grid-template-areas:
-      "grid-header grid-sidebar-right"
-      "grid-center grid-sidebar-right"
-      "grid-footer grid-sidebar-right";
+    padding: 0;
   }
 
   .page[data-frame="default"] > #quartz-body > .sidebar.left {
@@ -233,7 +235,7 @@ body footer {
   }
 }
 
-@media all and ($tablet) {
+@media all and ($withoutRightPanel) {
   .page[data-frame="default"] > #quartz-body {
     grid-template-columns: auto;
     grid-template-rows: auto auto auto auto;
@@ -242,6 +244,32 @@ body footer {
       "grid-center"
       "grid-sidebar-right"
       "grid-footer";
+  }
+
+  .page[data-frame="default"] > #quartz-body > .sidebar.right {
+    position: initial;
+    height: unset;
+    width: 100%;
+    flex-direction: row;
+    padding: 0;
+    margin-top: 1rem;
+
+    & > * {
+      flex: 1;
+      max-height: 24rem;
+    }
+  }
+}
+
+@media all and ($withRightPanel) {
+  .page[data-frame="default"] > #quartz-body {
+    column-gap: 1rem;
+    grid-template-columns: auto #{$sidePanelWidth};
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "grid-header grid-sidebar-right"
+      "grid-center grid-sidebar-right"
+      "grid-footer grid-sidebar-right";
   }
 }
 
