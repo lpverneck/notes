@@ -6,12 +6,13 @@ tags:
   - completed
 publish: true
 ---
+
 Environment variables are dynamic, user-definable values that can influence the behavior of running processes on a computer. They serve as a means to configure applications without altering the underlying code, enabling flexibility and adaptability in software development. Basically is a `KEY=VALUE` pair.
 
 There are two types of environment variables:
 
 - Regular environment variables
-- System environment variables (can be __user__-specific or __public__)
+- System environment variables (can be **user**-specific or **public**)
 
 ## PATH variable
 

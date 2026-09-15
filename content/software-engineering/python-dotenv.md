@@ -6,6 +6,7 @@ tags:
   - completed
 publish: true
 ---
+
 The python-dotenv library reads key-value pairs from a `.env` file and creates new [[environment-variables|environment variables]] from them.
 
 ```python title="Usage example"
