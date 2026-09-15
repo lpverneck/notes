@@ -271,9 +271,10 @@ plugins:
     enabled: true
     options:
       showCreated: true
+      showModified: true
       showDuration: true
       wordsPerMinute: 200
-    order: 50
+    order: 6
     layout:
       position: beforeBody
       priority: 20

@@ -1,3 +1,27 @@
+// src/dates.ts
+var DATE_ALIASES = {
+  created: ["created at", "createdAt", "created_at"],
+  modified: ["modified at", "modifiedAt", "modified_at", "updated at"],
+  published: ["published at", "publishedAt", "published_at"]
+};
+var NoteMetaDates = () => ({
+  name: "NoteMetaDates",
+  markdownPlugins() {
+    return [
+      () => (_tree, file) => {
+        const frontmatter = file.data.frontmatter;
+        if (!frontmatter) return;
+        for (const [canonical, aliases] of Object.entries(DATE_ALIASES)) {
+          if (frontmatter[canonical] !== void 0) continue;
+          const alias = aliases.find((name) => frontmatter[name] !== void 0);
+          if (alias !== void 0) frontmatter[canonical] = frontmatter[alias];
+        }
+      }
+    ];
+  }
+});
+var dates_default = NoteMetaDates;
+
 // node_modules/@quartz-community/utils/dist/date.js
 function formatDate(d2, locale = "en-US") {
   return d2.toLocaleDateString(locale, {
@@ -132,6 +156,7 @@ function u2(e2, t2, n2, o2, i2, u3) {
 // src/components/NoteMeta.tsx
 var defaultOptions = {
   showCreated: true,
+  showModified: true,
   showDuration: true,
   wordsPerMinute: 200
 };
@@ -253,33 +278,33 @@ var NoteMeta = (userOpts) => {
     const ctx = { slug: slug2, resolvedLinks: noteProps?.resolvedLinks ?? {} };
     const rows = [];
     const frontmatter = fileData.frontmatter;
-    const created = fileData.dates?.created;
-    if (opts.showCreated && created && frontmatter?.created !== void 0) {
-      rows.push({
-        key: "created",
-        value: /* @__PURE__ */ u2("time", { datetime: created.toISOString(), children: formatDate(created, cfg.locale) })
-      });
-    }
+    const dates = fileData.dates;
+    const dateRow = (label, date, raw) => date !== void 0 && raw !== void 0 ? rows.push({
+      label,
+      value: /* @__PURE__ */ u2("time", { datetime: date.toISOString(), children: formatDate(date, cfg.locale) })
+    }) : void 0;
+    if (opts.showCreated) dateRow("created at", dates?.created, frontmatter?.created);
+    if (opts.showModified) dateRow("modified at", dates?.modified, frontmatter?.modified);
     for (const [key, value] of Object.entries(noteProps?.properties ?? {})) {
       if (isEmpty(value)) continue;
       rows.push({
-        key,
+        label: key,
         value: key === "tags" && Array.isArray(value) ? renderTags(value, slug2) : renderValue(value, ctx)
       });
     }
     if (opts.showDuration && text) {
-      rows.push({ key: "duration", value: renderDuration(text, opts.wordsPerMinute) });
+      rows.push({ label: "duration", value: renderDuration(text, opts.wordsPerMinute) });
     }
     if (rows.length === 0) return null;
-    return /* @__PURE__ */ u2("dl", { class: classNames(displayClass, "note-meta"), children: rows.flatMap(({ key, value }) => [
-      /* @__PURE__ */ u2("dt", { children: key }, `${key}-key`),
-      /* @__PURE__ */ u2("dd", { children: value }, `${key}-value`)
+    return /* @__PURE__ */ u2("dl", { class: classNames(displayClass, "note-meta"), children: rows.flatMap(({ label, value }) => [
+      /* @__PURE__ */ u2("dt", { children: label }, `${label}-key`),
+      /* @__PURE__ */ u2("dd", { children: value }, `${label}-value`)
     ]) });
   };
   return Component;
 };
 var NoteMeta_default = NoteMeta;
 
-export { NoteMeta_default as NoteMeta };
+export { NoteMeta_default as NoteMeta, NoteMetaDates, dates_default as default };
 //# sourceMappingURL=index.js.map
 //# sourceMappingURL=index.js.map

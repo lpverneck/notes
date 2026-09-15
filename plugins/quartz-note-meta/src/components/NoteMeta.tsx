@@ -11,8 +11,10 @@ import { classNames } from "@quartz-community/utils/lang"
 import { resolveRelative, slugifyFilePath, splitAnchor } from "@quartz-community/utils/path"
 
 export interface NoteMetaOptions {
-  /** Exibe a linha `created`, lida da propriedade `created` do frontmatter. */
+  /** Exibe a linha `created at`, lida do frontmatter da nota. */
   showCreated: boolean
+  /** Exibe a linha `modified at`, lida do frontmatter da nota. */
+  showModified: boolean
   /** Exibe a linha `duration`: minutos estimados e total de palavras. */
   showDuration: boolean
   /** Velocidade de leitura usada para derivar os minutos. */
@@ -21,6 +23,7 @@ export interface NoteMetaOptions {
 
 const defaultOptions: NoteMetaOptions = {
   showCreated: true,
+  showModified: true,
   showDuration: true,
   wordsPerMinute: 200,
 }
@@ -227,23 +230,29 @@ const NoteMeta: QuartzComponentConstructor<Partial<NoteMetaOptions>> = (userOpts
 
     const slug = (fileData.slug ?? "") as FullSlug
     const ctx: LinkContext = { slug, resolvedLinks: noteProps?.resolvedLinks ?? {} }
-    const rows: { key: string; value: JSX.Element }[] = []
+    const rows: { label: string; value: JSX.Element }[] = []
 
-    // `dates.created` cai para git/filesystem quando a nota não declara `created`;
-    // aqui só interessa o valor vindo do frontmatter.
+    // As datas de `fileData.dates` caem para git/filesystem quando a nota não as
+    // declara; aqui só interessa o que veio do frontmatter. As chaves canônicas são
+    // preenchidas a partir de `created at`/`modified at` pelo transformer NoteMetaDates.
     const frontmatter = fileData.frontmatter as Record<string, unknown> | undefined
-    const created = (fileData.dates as { created?: Date } | undefined)?.created
-    if (opts.showCreated && created && frontmatter?.created !== undefined) {
-      rows.push({
-        key: "created",
-        value: <time datetime={created.toISOString()}>{formatDate(created, cfg.locale)}</time>,
-      })
-    }
+    const dates = fileData.dates as { created?: Date; modified?: Date } | undefined
+
+    const dateRow = (label: string, date?: Date, raw?: unknown) =>
+      date !== undefined && raw !== undefined
+        ? rows.push({
+            label,
+            value: <time datetime={date.toISOString()}>{formatDate(date, cfg.locale)}</time>,
+          })
+        : undefined
+
+    if (opts.showCreated) dateRow("created at", dates?.created, frontmatter?.created)
+    if (opts.showModified) dateRow("modified at", dates?.modified, frontmatter?.modified)
 
     for (const [key, value] of Object.entries(noteProps?.properties ?? {})) {
       if (isEmpty(value)) continue
       rows.push({
-        key,
+        label: key,
         value:
           key === "tags" && Array.isArray(value)
             ? renderTags(value as string[], slug)
@@ -252,16 +261,16 @@ const NoteMeta: QuartzComponentConstructor<Partial<NoteMetaOptions>> = (userOpts
     }
 
     if (opts.showDuration && text) {
-      rows.push({ key: "duration", value: renderDuration(text, opts.wordsPerMinute) })
+      rows.push({ label: "duration", value: renderDuration(text, opts.wordsPerMinute) })
     }
 
     if (rows.length === 0) return null
 
     return (
       <dl class={classNames(displayClass, "note-meta")}>
-        {rows.flatMap(({ key, value }) => [
-          <dt key={`${key}-key`}>{key}</dt>,
-          <dd key={`${key}-value`}>{value}</dd>,
+        {rows.flatMap(({ label, value }) => [
+          <dt key={`${label}-key`}>{label}</dt>,
+          <dd key={`${label}-value`}>{value}</dd>,
         ])}
       </dl>
     )

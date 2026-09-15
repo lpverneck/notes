@@ -1,7 +1,7 @@
 {
   "name": "quartz-note-meta",
   "version": "1.0.0",
-  "description": "Minimal note header for Quartz: frontmatter properties, creation date, reading duration and word count rendered as a single label grid.",
+  "description": "Minimal note header for Quartz: frontmatter properties, creation/modification dates, reading duration and word count rendered as a single label grid.",
   "type": "module",
   "license": "MIT",
   "author": "Lucas Verneck",
@@ -53,21 +53,25 @@
   "quartz": {
     "name": "note-meta",
     "displayName": "Note Meta",
-    "category": "component",
+    "category": [
+      "transformer",
+      "component"
+    ],
     "version": "1.0.0",
     "quartzVersion": ">=5.0.0",
     "dependencies": [],
-    "defaultOrder": 50,
+    "defaultOrder": 6,
     "defaultEnabled": true,
     "defaultOptions": {
       "showCreated": true,
       "showDuration": true,
-      "wordsPerMinute": 200
+      "wordsPerMinute": 200,
+      "showModified": true
     },
     "optionSchema": {
       "showCreated": {
         "type": "boolean",
-        "description": "Show the creation date row, read from the `created` frontmatter property"
+        "description": "Show the creation date row, read from `created at` (or `created`) in the frontmatter"
       },
       "showDuration": {
         "type": "boolean",
@@ -76,6 +80,10 @@
       "wordsPerMinute": {
         "type": "number",
         "description": "Reading speed used to derive the duration in minutes"
+      },
+      "showModified": {
+        "type": "boolean",
+        "description": "Show the modification date row, read from `modified at` (or `modified`)"
       }
     },
     "components": {
