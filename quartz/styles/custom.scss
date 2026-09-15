@@ -119,6 +119,7 @@ $breadcrumbAlignHeight: 2.2rem;
 $footerLicense: "a[href*='creativecommons.org']";
 
 body footer {
+  margin-bottom: 2rem;
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -270,6 +271,25 @@ $withoutRightPanel: "(min-width: #{map.get($breakpoints, mobile)}) and (max-widt
       "grid-header grid-sidebar-right"
       "grid-center grid-sidebar-right"
       "grid-footer grid-sidebar-right";
+  }
+}
+
+body[data-slug="index"] .page[data-frame="default"] > #quartz-body {
+  min-height: 100dvh;
+
+  // sidebar-left / header / center / sidebar-right / footer
+  @media all and ($mobile) {
+    grid-template-rows: auto auto 1fr auto auto;
+  }
+
+  // header / center / sidebar-right / footer
+  @media all and ($withoutRightPanel) {
+    grid-template-rows: auto 1fr auto auto;
+  }
+
+  // header / center / footer
+  @media all and ($withRightPanel) {
+    grid-template-rows: auto 1fr auto;
   }
 }
 
