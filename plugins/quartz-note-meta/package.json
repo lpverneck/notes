@@ -1,0 +1,94 @@
+{
+  "name": "quartz-note-meta",
+  "version": "1.0.0",
+  "description": "Minimal note header for Quartz: frontmatter properties, creation date, reading duration and word count rendered as a single label grid.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Lucas Verneck",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lpverneck/notes.git"
+  },
+  "keywords": [
+    "quartz",
+    "quartz-plugin",
+    "frontmatter",
+    "properties",
+    "metadata",
+    "component"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/components/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@quartz-community/utils": "^0.1.1"
+  },
+  "devDependencies": {
+    "@quartz-community/types": "^0.3.0",
+    "@types/node": "^24.10.0",
+    "preact": "10.29.7",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3"
+  },
+  "quartz": {
+    "name": "note-meta",
+    "displayName": "Note Meta",
+    "category": "component",
+    "version": "1.0.0",
+    "quartzVersion": ">=5.0.0",
+    "dependencies": [],
+    "defaultOrder": 50,
+    "defaultEnabled": true,
+    "defaultOptions": {
+      "showCreated": true,
+      "showDuration": true,
+      "wordsPerMinute": 200
+    },
+    "optionSchema": {
+      "showCreated": {
+        "type": "boolean",
+        "description": "Show the creation date row, read from the `created` frontmatter property"
+      },
+      "showDuration": {
+        "type": "boolean",
+        "description": "Show the duration row (estimated minutes plus word count)"
+      },
+      "wordsPerMinute": {
+        "type": "number",
+        "description": "Reading speed used to derive the duration in minutes"
+      }
+    },
+    "components": {
+      "NoteMeta": {
+        "displayName": "Note Meta",
+        "description": "Frontmatter properties, creation date and reading duration as a label grid",
+        "version": "1.0.0",
+        "defaultPosition": "beforeBody",
+        "defaultPriority": 20
+      }
+    }
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

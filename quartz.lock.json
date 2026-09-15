@@ -6,6 +6,12 @@
       "resolved": "/Users/lcs/dev/notes/plugins/quartz-jupyter-embed",
       "commit": "local",
       "installedAt": "2026-09-05T17:33:52.693Z"
+    },
+    "quartz-note-meta": {
+      "source": "./plugins/quartz-note-meta",
+      "resolved": "/Users/lcs/dev/notes/plugins/quartz-note-meta",
+      "commit": "local",
+      "installedAt": "2026-09-14T23:58:38.676Z"
     }
   }
 }

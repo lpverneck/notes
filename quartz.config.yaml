@@ -180,12 +180,10 @@ plugins:
       position: beforeBody
       priority: 10
       condition: not-index
+  # Substituído pelo ./plugins/quartz-note-meta, que junta data, duração e
+  # propriedades num bloco só.
   - source: "@quartz-community/content-meta"
-    enabled: true
-    layout:
-      position: beforeBody
-      priority: 20
-      condition: not-index
+    enabled: false
   - source: "@quartz-community/tag-list"
     enabled: false
     layout:
@@ -261,13 +259,25 @@ plugins:
         - tags
         - aliases
       excludedProperties: []
-      hidePropertiesView: false
+      hidePropertiesView: true
       delimiters: ---
       language: yaml
     order: 5
     layout:
       position: beforeBody
       priority: 15
+      display: all
+  - source: ./plugins/quartz-note-meta
+    enabled: true
+    options:
+      showCreated: true
+      showDuration: true
+      wordsPerMinute: 200
+    order: 50
+    layout:
+      position: beforeBody
+      priority: 20
+      condition: not-index
       display: all
   - source: ./plugins/quartz-jupyter-embed
     enabled: true
@@ -294,11 +304,13 @@ layout:
     folder:
       exclude:
         - reader-mode
+        - quartz-note-meta
       positions:
         right: []
     tag:
       exclude:
         - reader-mode
+        - quartz-note-meta
       positions:
         right: []
     canvas: {}
