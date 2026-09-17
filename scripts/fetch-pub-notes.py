@@ -134,8 +134,32 @@ def replace_mermaid_diagram_custom_tags(target_dir: str, replacement: str = ""):
             print(f"An error occurred: {e}")
 
 
+def normalize_frontmatter_spacing(target_dir: str) -> None:
+    """Ensure exactly one blank line between the frontmatter closing '---' and
+    the note content."""
+
+    target_notes_path = Path(target_dir) / "content"
+    all_pub_notes = [x for x in target_notes_path.rglob("*.md")]
+
+    for file_path in tqdm(all_pub_notes):
+        try:
+            with open(file_path, "r", encoding="utf-8") as file:
+                content = file.read()
+
+            pattern = r"\A(---\r?\n.*?\r?\n---)[ \t]*\r?\n(?:[ \t]*\r?\n)*(?=\S)"
+            updated_content = re.sub(pattern, r"\1\n\n", content, flags=re.DOTALL)
+
+            if updated_content != content:
+                with open(file_path, "w", encoding="utf-8") as file:
+                    file.write(updated_content)
+                print(f"Successfully normalized frontmatter spacing in {file_path}.")
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
 if __name__ == "__main__":
     pvt_sb_dir, pub_sb_dir = get_directories_path()
     copy_public_notes(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
     copy_notes_attachments(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
     replace_mermaid_diagram_custom_tags(target_dir=pub_sb_dir)
+    normalize_frontmatter_spacing(target_dir=pub_sb_dir)
