@@ -11,3 +11,4 @@ fetch_pub_notes:
 format_code:
 	@echo "[ Step 3 ] Formatting notes ..."
 	uv tool run ruff format .
+	npx prettier content --write
