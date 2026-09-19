@@ -20,8 +20,8 @@ Traditional [[apm|Application Performance Monitoring (APM)]] usually focuses on 
 ## Concepts
 
 - **Spans**: a unit of work representing an operation on the LLM application, and can be seen as the building block of a trace
-	- *Attributes*: `name`, `start_time, duration`, `error_type, message, traceback`, `inputs, outputs`, `metadata`, `metrics`, and `tags`
-	- *Span kinds*: `LLM`, `Workflow`, `Agent`, `Tool`, `Task`, `Embedding`, and `Retrieval`
+  - _Attributes_: `name`, `start_time, duration`, `error_type, message, traceback`, `inputs, outputs`, `metadata`, `metrics`, and `tags`
+  - _Span kinds_: `LLM`, `Workflow`, `Agent`, `Tool`, `Task`, `Embedding`, and `Retrieval`
 - **Traces**: they represent the work involved in processing a request in the LLM application and consist of one or more nested spans
 - **Evaluations**: a method for measuring the LLM application performance
 
