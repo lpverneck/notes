@@ -19,4 +19,6 @@ It's very robust to imbalanced-class datasets. Different from the [[f1-score|F1-
 
 MCC is calculated using all four [[confusion-matrix|confusion-matrix]] elements: True Positives (TP), False Positives (FP), True Negatives (TN), and False Negatives (FN):
 
-$$MCC = \frac{(TP \times TN) - (FP \times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}$$
+$$
+MCC = \frac{(TP \times TN) - (FP \times FN)}{\sqrt{(TP+FP)(TP+FN)(TN+FP)(TN+FN)}}
+$$
