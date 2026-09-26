@@ -1,9 +1,11 @@
 ---
-title: Git
+title: Git flow
 created at: 2026-09-21
 modified at: 2026-09-21
+status: Active
 tags:
-  - active
+  - tools
+  - swe
 publish: true
 ---
 

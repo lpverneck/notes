@@ -2,8 +2,9 @@
 title: YAML
 created at: 2024-01-16
 modified at: 2024-01-16
+status: Completed
 tags:
-  - completed
+  - swe
 publish: true
 ---
 

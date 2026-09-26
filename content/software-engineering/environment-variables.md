@@ -2,8 +2,9 @@
 title: Environment variables
 created at: 2024-10-24
 modified at: 2024-10-24
+status: Completed
 tags:
-  - completed
+  - swe
 publish: true
 ---
 

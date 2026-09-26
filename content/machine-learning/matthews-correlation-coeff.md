@@ -2,8 +2,10 @@
 title: Matthews correlation coefficient (MCC)
 created at: 2026-09-18
 modified at: 2026-09-18
+status: Completed
 tags:
-  - completed
+  - ml
+  - ds
 publish: true
 ---
 

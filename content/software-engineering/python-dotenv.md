@@ -2,9 +2,10 @@
 title: Python-dotenv
 created at: 2024-10-24
 modified at: 2024-10-24
+status: Completed
 tags:
-  - completed
   - tools
+  - swe
 publish: true
 ---
 
