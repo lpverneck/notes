@@ -1,5 +1,6 @@
 ---
 title: Lucas's notes.
+publish: true
 ---
 
 hi, i'm lucas! 👋
