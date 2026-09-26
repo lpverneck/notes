@@ -6,6 +6,7 @@ Renders a note's metadata as a single minimal label grid, right under the title:
 ─────────────────────────────────────────────
  CREATED AT    Sep 08, 2026
  MODIFIED AT   Sep 14, 2026
+ STATUS        (>) Active
  TAGS          #active  #llm  #observability
  DURATION      2 min · 295 words
 ─────────────────────────────────────────────
@@ -27,6 +28,10 @@ Rows with no value are skipped.
   timestamps, so every note would show a date whether or not it has one.
 - **tags** — chips that wrap, so notes with many tags stay readable. The `#` prefix and
   the chip background come from `a.internal.tag-link` in `quartz/styles/base.scss`.
+- **status** — a badge with a Lucide icon and its own color: `Active`, `Completed`,
+  `Dropped` and `On Hold`, matching how the vault reads them in Obsidian. The value is
+  slugified into `data-status` (`On Hold` -> `on-hold`), which is what `custom.scss`
+  colors; anything outside that list falls back to plain text.
 - **duration** — estimated minutes plus the word count of `fileData.text`.
 - Other properties render as text, with wikilinks, markdown links and bare URLs turned
   into anchors (using `resolvedLinks`, which the `note-properties` html plugin fills in).

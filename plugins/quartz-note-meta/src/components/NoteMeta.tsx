@@ -188,6 +188,90 @@ function renderTags(tags: string[], slug: FullSlug): JSX.Element {
 }
 
 /**
+ * Ícones do Lucide (ISC) desenhados inline em vez de importados: sem dependência
+ * nova, e o traço segue `currentColor`, então uma única cor no SCSS pinta ícone,
+ * texto e fundo do selo.
+ */
+const STATUS_ICONS: Record<string, JSX.Element> = {
+  // circle-arrow-right
+  active: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="M8 12h8" />
+      <path d="m12 16 4-4-4-4" />
+    </>
+  ),
+  // circle-check
+  completed: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m9 12 2 2 4-4" />
+    </>
+  ),
+  // circle-x
+  dropped: (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <path d="m15 9-6 6" />
+      <path d="m9 9 6 6" />
+    </>
+  ),
+  // circle-pause
+  "on-hold": (
+    <>
+      <circle cx="12" cy="12" r="10" />
+      <line x1="10" x2="10" y1="15" y2="9" />
+      <line x1="14" x2="14" y1="15" y2="9" />
+    </>
+  ),
+}
+
+/** `On Hold` -> `on-hold`: chave do ícone e o `data-status` que o SCSS colore. */
+function statusKey(value: string): string {
+  return value.trim().toLowerCase().replace(/\s+/g, "-")
+}
+
+/**
+ * `status` vira um selo com ícone. Um valor fora da lista cai no texto puro, para
+ * que um estado novo no vault apareça na nota antes de ganhar estilo aqui.
+ */
+function renderStatus(value: unknown, ctx: LinkContext): JSX.Element {
+  const key = typeof value === "string" ? statusKey(value) : ""
+  const icon = STATUS_ICONS[key]
+  if (!icon) return renderValue(value, ctx)
+
+  return (
+    <span class="note-meta-status" data-status={key}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        {icon}
+      </svg>
+      {(value as string).trim()}
+    </span>
+  )
+}
+
+/** Escolhe o renderer da linha: `tags` e `status` têm forma própria, o resto é texto. */
+function renderProperty(
+  key: string,
+  value: unknown,
+  slug: FullSlug,
+  ctx: LinkContext,
+): JSX.Element {
+  if (key === "tags" && Array.isArray(value)) return renderTags(value as string[], slug)
+  if (key === "status") return renderStatus(value, ctx)
+  return renderValue(value, ctx)
+}
+
+/**
  * Conta palavras separadas por espaço. Bate com o que a lib `reading-time` — usada
  * pelo antigo content-meta — devolve para texto latino, sem arrastar o wrapper de
  * stream dela, que exige `require()` dinâmico dentro de um bundle ESM.
@@ -251,13 +335,7 @@ const NoteMeta: QuartzComponentConstructor<Partial<NoteMetaOptions>> = (userOpts
 
     for (const [key, value] of Object.entries(noteProps?.properties ?? {})) {
       if (isEmpty(value)) continue
-      rows.push({
-        label: key,
-        value:
-          key === "tags" && Array.isArray(value)
-            ? renderTags(value as string[], slug)
-            : renderValue(value, ctx),
-      })
+      rows.push({ label: key, value: renderProperty(key, value, slug, ctx) })
     }
 
     if (opts.showDuration && text) {

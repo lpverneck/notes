@@ -133,6 +133,9 @@ function _sluggify(s2) {
   return slugifyPath(s2);
 }
 var l;
+function S(n2) {
+  return n2.children;
+}
 l = { __e: function(n2, l2, u3, t2) {
   for (var i2, r2, o2; l2 = l2.__; ) if ((i2 = l2.__c) && !i2.__) try {
     if ((r2 = i2.constructor) && null != r2.getDerivedStateFromError && (i2.setState(r2.getDerivedStateFromError(n2)), o2 = i2.__d), null != i2.componentDidCatch && (i2.componentDidCatch(n2, t2 || {}), o2 = i2.__d), o2) return i2.__E = i2;
@@ -248,6 +251,61 @@ function renderValue(value, ctx) {
 function renderTags(tags, slug2) {
   return /* @__PURE__ */ u2("ul", { class: "note-meta-tags", children: tags.map((tag) => /* @__PURE__ */ u2("li", { children: /* @__PURE__ */ u2("a", { href: resolveRelative(slug2, `tags/${tag}`), class: "internal tag-link", children: tag }) }, tag)) });
 }
+var STATUS_ICONS = {
+  // circle-arrow-right
+  active: /* @__PURE__ */ u2(S, { children: [
+    /* @__PURE__ */ u2("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ u2("path", { d: "M8 12h8" }),
+    /* @__PURE__ */ u2("path", { d: "m12 16 4-4-4-4" })
+  ] }),
+  // circle-check
+  completed: /* @__PURE__ */ u2(S, { children: [
+    /* @__PURE__ */ u2("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ u2("path", { d: "m9 12 2 2 4-4" })
+  ] }),
+  // circle-x
+  dropped: /* @__PURE__ */ u2(S, { children: [
+    /* @__PURE__ */ u2("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ u2("path", { d: "m15 9-6 6" }),
+    /* @__PURE__ */ u2("path", { d: "m9 9 6 6" })
+  ] }),
+  // circle-pause
+  "on-hold": /* @__PURE__ */ u2(S, { children: [
+    /* @__PURE__ */ u2("circle", { cx: "12", cy: "12", r: "10" }),
+    /* @__PURE__ */ u2("line", { x1: "10", x2: "10", y1: "15", y2: "9" }),
+    /* @__PURE__ */ u2("line", { x1: "14", x2: "14", y1: "15", y2: "9" })
+  ] })
+};
+function statusKey(value) {
+  return value.trim().toLowerCase().replace(/\s+/g, "-");
+}
+function renderStatus(value, ctx) {
+  const key = typeof value === "string" ? statusKey(value) : "";
+  const icon = STATUS_ICONS[key];
+  if (!icon) return renderValue(value, ctx);
+  return /* @__PURE__ */ u2("span", { class: "note-meta-status", "data-status": key, children: [
+    /* @__PURE__ */ u2(
+      "svg",
+      {
+        xmlns: "http://www.w3.org/2000/svg",
+        viewBox: "0 0 24 24",
+        fill: "none",
+        stroke: "currentColor",
+        "stroke-width": "2",
+        "stroke-linecap": "round",
+        "stroke-linejoin": "round",
+        "aria-hidden": "true",
+        children: icon
+      }
+    ),
+    value.trim()
+  ] });
+}
+function renderProperty(key, value, slug2, ctx) {
+  if (key === "tags" && Array.isArray(value)) return renderTags(value, slug2);
+  if (key === "status") return renderStatus(value, ctx);
+  return renderValue(value, ctx);
+}
 function countWords(text) {
   const trimmed = text.trim();
   return trimmed === "" ? 0 : trimmed.split(/\s+/).length;
@@ -287,10 +345,7 @@ var NoteMeta = (userOpts) => {
     if (opts.showModified) dateRow("modified at", dates?.modified, frontmatter?.modified);
     for (const [key, value] of Object.entries(noteProps?.properties ?? {})) {
       if (isEmpty(value)) continue;
-      rows.push({
-        label: key,
-        value: key === "tags" && Array.isArray(value) ? renderTags(value, slug2) : renderValue(value, ctx)
-      });
+      rows.push({ label: key, value: renderProperty(key, value, slug2, ctx) });
     }
     if (opts.showDuration && text) {
       rows.push({ label: "duration", value: renderDuration(text, opts.wordsPerMinute) });

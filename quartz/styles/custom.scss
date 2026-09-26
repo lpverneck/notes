@@ -454,6 +454,60 @@ body[data-slug="index"] .page[data-frame="default"] > #quartz-body {
   }
 }
 
+:root {
+  --status-active: #a16207;
+  --status-completed: #15803d;
+  --status-dropped: #b91c1c;
+  --status-on-hold: #c2410c;
+  --status-tint: 12%;
+}
+
+:root[saved-theme="dark"] {
+  --status-active: #facc15;
+  --status-completed: #4ade80;
+  --status-dropped: #f87171;
+  --status-on-hold: #fb923c;
+  --status-tint: 18%;
+}
+
+.note-meta-status {
+  --status-color: var(--gray);
+
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.05rem 0.45rem;
+  border-radius: 5px;
+  background-color: color-mix(in srgb, var(--status-color) var(--status-tint), transparent);
+  color: var(--status-color);
+  font-size: 0.8rem;
+  font-weight: $semiBoldWeight;
+  line-height: 1.4rem;
+  white-space: nowrap;
+
+  &[data-status="active"] {
+    --status-color: var(--status-active);
+  }
+
+  &[data-status="completed"] {
+    --status-color: var(--status-completed);
+  }
+
+  &[data-status="dropped"] {
+    --status-color: var(--status-dropped);
+  }
+
+  &[data-status="on-hold"] {
+    --status-color: var(--status-on-hold);
+  }
+
+  > svg {
+    flex: none;
+    width: 0.95em;
+    height: 0.95em;
+  }
+}
+
 @media all and ($mobile) {
   .note-meta {
     grid-template-columns: minmax(0, 1fr);

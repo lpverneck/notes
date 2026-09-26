@@ -52,3 +52,17 @@ subfamilies: "Argon", "Neon", "Xenon", "Radon", and "Krypton".
 
 - Source: https://github.com/githubnext/monaspace
 - License text: `quartz/static/fonts/monaspace-neon/LICENSE.txt`
+
+---
+
+## Icons
+
+The four status icons in `plugins/quartz-note-meta` (`circle-arrow-right`, `circle-check`,
+`circle-x` and `circle-pause`) are inlined from [Lucide](https://lucide.dev), licensed
+under the ISC License.
+
+Copyright © 2020 Lucide Contributors. Lucide is a fork of Feather Icons,
+Copyright © 2013-2022 Cole Bemis.
+
+- Source: https://github.com/lucide-icons/lucide
+- License text: https://github.com/lucide-icons/lucide/blob/main/LICENSE
