@@ -15,6 +15,19 @@ ROOT_FOLDERS = [
 REQUIRED_KEYS = ("title", "created at", "modified at", "status")
 OPTIONAL_KEYS = ("status", "tags")
 FRONTMATTER_RE = re.compile(r"\A---\r?\n(.*?)\r?\n---(?:\r?\n|\Z)", re.DOTALL)
+MERMAID_BLOCK_RE = re.compile(
+    r"^(```mermaid[ \t]*\r?\n)(.*?)(^```[ \t]*$)", re.DOTALL | re.MULTILINE
+)
+MERMAID_DEFAULT_CONFIG = """---
+config:
+  flowchart:
+    wrappingWidth: 400
+    padding: 16
+    subGraphTitleMargin:
+      top: 6
+      bottom: 12
+---
+"""
 
 
 def get_directories_path() -> tuple[str, str]:
@@ -255,6 +268,44 @@ def replace_mermaid_diagram_custom_tags(target_dir: str, replacement: str = ""):
             print(f"An error occurred: {e}")
 
 
+def _normalize_mermaid_body(body: str) -> str:
+    """Given the source of a mermaid diagram, turn the literal '\\n' line breaks
+    Mermaid does not understand into '<br>' and prepend the default config when
+    the diagram has none of its own."""
+
+    body = body.replace("\\n", "<br>")
+
+    if not body.lstrip().startswith("---"):
+        body = MERMAID_DEFAULT_CONFIG + body
+
+    return body
+
+
+def normalize_mermaid_blocks(target_dir: str) -> None:
+    """Rewrite the mermaid blocks of the published notes so they render well on
+    the site, leaving the notes in the vault untouched."""
+
+    target_notes_path = Path(target_dir) / "content"
+    all_pub_notes = [x for x in target_notes_path.rglob("*.md")]
+
+    for file_path in tqdm(all_pub_notes):
+        try:
+            content = file_path.read_text(encoding="utf-8")
+
+            updated_content, count = MERMAID_BLOCK_RE.subn(
+                lambda m: m.group(1) + _normalize_mermaid_body(m.group(2)) + m.group(3),
+                content,
+            )
+
+            if updated_content != content:
+                file_path.write_text(updated_content, encoding="utf-8")
+                print(
+                    f"Successfully normalized {count} mermaid block(s) in {file_path}."
+                )
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+
 def drop_empty_frontmatter_keys(target_dir: str) -> None:
     """Remove the template keys a note left empty. They render as nothing on the
     site, so keeping them would make the published file disagree with the page."""
@@ -334,5 +385,6 @@ if __name__ == "__main__":
     if not args.dry_run:
         copy_notes_attachments(src_dir=pvt_sb_dir, target_dir=pub_sb_dir)
         replace_mermaid_diagram_custom_tags(target_dir=pub_sb_dir)
+        normalize_mermaid_blocks(target_dir=pub_sb_dir)
         drop_empty_frontmatter_keys(target_dir=pub_sb_dir)
         normalize_frontmatter_spacing(target_dir=pub_sb_dir)
