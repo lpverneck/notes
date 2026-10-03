@@ -42,6 +42,15 @@ All metrics below are improved by an observability system, but the monitoring sy
 ### General structure of observability solutions
 
 ```mermaid
+---
+config:
+  flowchart:
+    wrappingWidth: 400
+    padding: 16
+    subGraphTitleMargin:
+      top: 6
+      bottom: 12
+---
 flowchart LR
 	subgraph LeftBox [Software system]
 		subgraph OTELBox ["Collect telemetry data (OTEL)"]
@@ -51,9 +60,9 @@ flowchart LR
 		end
 	end
 	subgraph RightBox [Process/Analyse and represent data]
-		C["Observability solution server\n(On-premise, Cloud or Hybrid)"]
+		C["Observability solution server<br>(On-premise, Cloud or Hybrid)"]
 	end
-	LeftBox -->|"Transmit data to a backend\nPath: Direct, Proxy\nProtocol: HTTPS, Custom\n(OTEL)"| RightBox
+	LeftBox -->|"Transmit data to a backend<br>Path: Direct, Proxy<br>Protocol: HTTPS, Custom<br>(OTEL)"| RightBox
 ```
 
 ## Instrumentation process
