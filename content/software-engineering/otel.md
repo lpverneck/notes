@@ -1,8 +1,8 @@
 ---
 title: OpenTelemetry for observability
 created at: 2026-09-30
-modified at: 2026-10-09
-status: Active
+modified at: 2026-10-19
+status: Completed
 tags:
   - swe
 publish: true
@@ -25,10 +25,10 @@ Different from monitoring, observability helps identify underlying cause of a fa
 ### Telemetry signals
 
 - **Metrics**: numerical values as point in time
-- **Logs**: records of activities or events
+- **Logs**: records of activities or events (events are a specific type of log)
 - **Traces**: shows the path and request states through a system
-- **Baggage**: ???
-- **Profiles**: it's an emerging signal ...
+- **Baggage**: is a key-value information that can be propagated alongside context element
+- **Profiles**: is a collection of samples and associated metadata that shows where applications consume resources during execution
 
 ### Reliability metrics
 
@@ -74,7 +74,7 @@ flowchart LR
 
 ## Code-based instrumentation
 
-### Metrics
+### 1. Metrics
 
 1. Initialize a meter provider on top of application
 2. Meter creates metric instruments which captures measurements
@@ -93,7 +93,7 @@ Every metric instrument is defined by 4 fields:
 - Unit (optional)
 - Description (optional)
 
-### Traces
+### 2. Traces
 
 1. Initialize a tracer provider on top of application
 2. Create a Tracer component
@@ -126,18 +126,22 @@ Every span has some properties:
   - producer
   - consumer
 
-Trace context propagation: is what keeps multiples spans together
+> [!info]
+> **Context propagation** is what keeps multiples spans together.
 
-- Default propagator (W3C trace context)
-  - traceparent
-  - tracestate
+Default propagator (W3C trace context):
 
-### Logs
+- `traceparent`
+- `tracestate`
+
+### 3. Logs
 
 - OpenTelemetry supports existing legacy of logs and logging libraries + enhance
 - Does not provide bespoke API or SDK to create logs
 - Enhances existing logs with correlation data (trace id, span id etc.)
 - Provides capabilities to receive, process and export log data to a consumer/backend server
+
+Every log object has some properties:
 
 - Timestamp
 - ObservedTimestamp
@@ -151,54 +155,171 @@ Trace context propagation: is what keeps multiples spans together
 - InstrumentationScope
 - Attributes
 
-### Baggage
+### 4. Baggage
 
-- key-value store
-- used to pass contextual information between different services
-- contextual information that is passed between signals
+- A key-value store
+- Usually used to pass contextual information between different services, for example a `user_id`
+- Also can be passed between signals
 
-### Profilling
+### 5. Profilling
 
-- snapshots of code resource utilizations (CPU / Memory)
-- Application-level profilling
+- Snapshots of code resource utilizations (CPU / Memory)
+- Application-level profiling
 - System-level profiling
-- opentelemetry-ebpf-profiler
--
+- It has available the opentelemetry-ebpf-profiler
 
-## Zero-code + code-base instrumentation together
+## SDK Architecture and composability
 
-pass
+The SDK it's the engine that provides the `resource` and `exporters` elements.
 
-## SDK Architecture and Composability
+It has three main elements:
 
-The SDK it's the engine provides the `resource` and `exporters` elements.
-
-The sdk has three main elemnts
-
-- Meeter Provider
+- Meter Provider
 - Tracer Provider
 - Logger Provider
 
-Each module has your own plugins interfaces.
+Each module has your own plugins interfaces and the high level used mental model follows the paradigm:
 
-API -> Provider -> Processor/Reader -> Exporter
+```mermaid
+---
+config:
+  flowchart:
+    wrappingWidth: 400
+    padding: 16
+    subGraphTitleMargin:
+      top: 6
+      bottom: 12
+---
+graph LR
+    A[API] --> B[Provider]
+    B --> C[Processor/Reader]
+    C --> D[Exporter]
+```
 
-Three ways of configure the SDK
+There are three ways to configure the SDK:
 
 - Programmatic configuration
-- environment variables
-- configuration files
+- Environment variables
+- Configuration files
 
-==DIAGRAM
+## OpenTelemetry's anatomy
 
-Genretate and collect
+```mermaid
+---
+config:
+  flowchart:
+    wrappingWidth: 400
+    padding: 16
+    subGraphTitleMargin:
+      top: 6
+      bottom: 12
+---
+flowchart LR
+    subgraph GC [Generate and collect]
+        direction LR
 
-WHAT: Metrics, Logs, Traces
-How: Zero-code, Code-based
-OTel: APIs, SDKs
+        subgraph What [What]
+            direction TB
+            M[Metrics]
+            L[Logs]
+            T[Traces]
+        end
 
-Export
+        subgraph How [How]
+            direction TB
+            ZC[Zero-code]
+            CB[Code-based]
+        end
 
-TLP
-Collector
-Tools
+        subgraph OTEL [OTEL]
+            direction TB
+            A[APIs]
+            S[SDKs]
+        end
+
+        What ~~~ OTEL
+        How ~~~ OTEL
+    end
+
+    subgraph EXP [Export]
+        direction TB
+        O[OTLP]
+        C[Collector]
+        Tl[Tools]
+    end
+
+    GC --> EXP
+```
+
+## Standards
+
+- **Open Telemetry Protocol (OTLP)**: it's a general purpose protocol that ensures that data can be efficiently transmitted from applications to observability backends reliably. It defines how telemetry data is encoded, transported and delivered.
+- **Semantic Conventions**: is a shared dictionary with a defined standardized telemetry naming and structure. Make it consistent, portable and tool-friendly. Required for SDKs and instrumentation authors, also recommended for developers.
+
+The first moves your data and the second one describes it.
+
+## Collector
+
+It's an intermediate component between the data sources and the observability backend. It provides some capabilities such as: batch, enrich, filter or even sampling data.
+
+Principal components are:
+
+- Receiver
+- Processor
+- Exporter
+- Extensions
+- Service and pipelines
+
+- Deployment patterns: agent, gateway and mixed.
+- Scaling strategies: vertical and horizontal scaling.
+
+The collector is an optional element but extremely recommended.
+
+## Debugging and maintenance observability pipelines
+
+### 1. Troubleshooting context propagation
+
+- Mismatched propagators - W3C TraceContext and B3
+- Headers stripped - Load balancer, API Gateway, Reverse Proxy etc.
+- Failed context injection
+
+### 2. Debugging collector pipelines
+
+- Debug exporter
+- Collector validate subcommand
+- Internal telemetry
+- zPages
+
+### 3. Error handling and data loss
+
+- Exporter retries
+- Queues - in memory and persistent
+- Set up the `memorylimiterprocessor`
+- Backpressure
+
+### 4. Schema management
+
+It's possible to use an schema translate processor to translate one schema version into another. This problem appears when there are multiple semantic conventions being used on the application.
+
+## Site reliability engineering (SRE) principles
+
+| Term         | Definition                              | Key Concept            |
+| ------------ | --------------------------------------- | ---------------------- |
+| SLIs         | Service level indicator                 | Measures               |
+| SLOs         | Service level objective                 | Target                 |
+| SLAs         | Service level agreement                 | Commit                 |
+| Error budget | Space between target and perfect states | Room for make mistakes |
+
+Commonly used metrics:
+
+- Availability SLO
+- Latency SLO
+- Error SLO
+
+> [!example]
+> Error rate:
+>
+> - Error rate SLI = (Failed request / Total of valid requests) * 100
+> - Error rate SLO: the error rate must remain below 1% over a 28-day window.
+
+SRE practices recommend a window of at least 28 days (4 weeks).
